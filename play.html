@@ -133,6 +133,24 @@
         .hidden {
             display: none !important;
         }
+        
+        .game-info-display {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        
+        .game-info-display div {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -146,6 +164,13 @@
             <div class="back-home">
                 <a href="index.html" style="color: white; text-decoration: none; font-size: 16px; opacity: 0.8; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Back to Home</a>
             </div>
+        </div>
+        
+        <!-- Token Gating Status -->
+        <div id="gameInfo" class="game-info-display">
+            <div>Entry Fee: 100 APX</div>
+            <div>Prize Pool: Active</div>
+            <div>Mode: Token Gated</div>
         </div>
         
         
@@ -624,6 +649,45 @@
                  // Auto-submit score to Supabase
          async function autoSubmitScore() {
              try {
+                 // Check if wallet is connected
+                 const isWalletConnected = window.heavensGateWallet && window.heavensGateWallet.isWalletConnected();
+                 
+                 let scorePayload = {
+                     name: 'Player',
+                     score: score
+                 };
+                 
+                 if (isWalletConnected) {
+                     // Try to get wallet signature for verification
+                     try {
+                         const wallet = window.heavensGateWallet.getWallet();
+                         const address = window.heavensGateWallet.getAddress();
+                         
+                         // Create a message to sign
+                         const message = `Heaven's Gate Score: ${score} - ${Date.now()}`;
+                         
+                         // Request signature from wallet
+                         const encodedMessage = new TextEncoder().encode(message);
+                         const signature = await wallet.signMessage(encodedMessage, 'utf8');
+                         
+                         // Add wallet verification data to payload
+                         scorePayload = {
+                             ...scorePayload,
+                             address: address,
+                             message: message,
+                             signature: Array.from(signature)
+                         };
+                         
+                         console.log('✅ Score submitted with wallet verification:', scorePayload);
+                         
+                     } catch (signError) {
+                         console.log('⚠️ Wallet signature failed, submitting without verification');
+                         console.error('Signature error:', signError);
+                     }
+                 } else {
+                     console.log('📝 Score submitted without wallet verification');
+                 }
+                 
                  const response = await fetch(`${SUPABASE_URL}/rest/v1/scores`, {
                      method: 'POST',
                      headers: {
@@ -631,20 +695,87 @@
                          'apikey': SUPABASE_ANON_KEY,
                          'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
                      },
-                     body: JSON.stringify({
-                         name: 'Player',
-                         score: score
-                     })
+                     body: JSON.stringify(scorePayload)
                  });
                  
                  if (response.ok) {
-                     console.log('Score automatically submitted to leaderboard');
+                     console.log('Score submitted to leaderboard');
+                     
+                     // Show appropriate message based on wallet status
+                     if (isWalletConnected && scorePayload.signature) {
+                         showGameNotification('Score submitted with wallet verification! 🎮✅', 'success');
+                     } else if (isWalletConnected) {
+                         showGameNotification('Score submitted! (Wallet verification failed)', 'warning');
+                     } else {
+                         showGameNotification('Score submitted! Connect wallet to verify your address', 'info');
+                     }
                  } else {
-                     console.error('Failed to auto-submit score');
+                     console.error('Failed to submit score');
+                     showGameNotification('Failed to submit score', 'error');
                  }
              } catch (error) {
-                 console.error('Error auto-submitting score:', error);
+                 console.error('Error submitting score:', error);
+                 showGameNotification('Error submitting score', 'error');
              }
+         }
+         
+         // Show game-specific notifications
+         function showGameNotification(message, type = 'info') {
+             // Create notification element
+             const notification = document.createElement('div');
+             notification.className = `game-notification game-notification-${type}`;
+             notification.textContent = message;
+             notification.style.cssText = `
+                 position: fixed;
+                 top: 50%;
+                 left: 50%;
+                 transform: translate(-50%, -50%);
+                 padding: 15px 25px;
+                 border-radius: 10px;
+                 color: white;
+                 font-weight: bold;
+                 font-size: 16px;
+                 z-index: 10001;
+                 opacity: 0;
+                 transition: opacity 0.3s ease;
+                 max-width: 400px;
+                 text-align: center;
+                 font-family: Arial, sans-serif;
+                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+             `;
+             
+             // Set background color based on type
+             switch (type) {
+                 case 'success':
+                     notification.style.background = 'linear-gradient(135deg, #4CAF50, #45a049)';
+                     break;
+                 case 'error':
+                     notification.style.background = 'linear-gradient(135deg, #f44336, #d32f2f)';
+                     break;
+                 case 'warning':
+                     notification.style.background = 'linear-gradient(135deg, #ff9800, #f57c00)';
+                     break;
+                 default:
+                     notification.style.background = 'linear-gradient(135deg, #2196F3, #1976D2)';
+             }
+             
+             // Add to page
+             document.body.appendChild(notification);
+             
+             // Animate in
+             setTimeout(() => {
+                 notification.style.opacity = '1';
+             }, 100);
+             
+             // Remove after 3 seconds
+             setTimeout(() => {
+                 notification.style.opacity = '0';
+                 setTimeout(() => {
+                     if (notification.parentNode) {
+                         notification.parentNode.removeChild(notification);
+                     }
+                 }, 300);
+             }, 3000);
          }
          
          function gameOver() {
@@ -728,5 +859,15 @@
         loadImages();
         requestAnimationFrame(gameLoop);
     </script>
+    
+    <!-- Solana Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.87.6/lib/index.iife.min.js"></script>
+    <script>
+        // Make solanaWeb3 globally available
+        window.solanaWeb3 = solanaWeb3;
+        console.log('🌐 Solana Web3 loaded:', typeof solanaWeb3);
+    </script>
+    <script src="scripts/wallet-provider.js"></script>
+    <script src="scripts/ConnectWallet.js"></script>
 </body>
 </html>

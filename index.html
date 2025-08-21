@@ -19,48 +19,436 @@
             color: white;
             font-family: 'Arial', sans-serif;
             overflow-x: hidden;
+            position: relative;
+        }
+        
+        @keyframes casinoGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        /* Casino Arcade Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 0, 150, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(255, 255, 0, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+                 /* Navigation Header */
+         .nav-header {
+             position: fixed;
+             top: 0;
+             left: 0;
+             width: 100%;
+             z-index: 1000;
+             background: transparent;
+         }
+         
+         .navbar {
+             padding: 1.5rem 0;
+         }
+         
+         .nav-container {
+             max-width: 1400px;
+             margin: 0 auto;
+             padding: 0 2rem;
+             display: flex;
+             justify-content: space-between;
+             align-items: center;
+         }
+         
+         .nav-logo img {
+             filter: drop-shadow(0 2px 8px rgba(255, 215, 0, 0.3));
+         }
+         
+         .nav-menu {
+             display: flex;
+             list-style: none;
+             margin: 0;
+             padding: 0;
+             gap: 2rem;
+         }
+         
+         .nav-item {
+             position: relative;
+         }
+         
+         .nav-link {
+             color: rgba(255, 255, 255, 0.9);
+             text-decoration: none;
+             font-weight: 400;
+             font-size: 0.95rem;
+             transition: all 0.3s ease;
+             padding: 0.5rem 1rem;
+             position: relative;
+         }
+         
+         .nav-link:hover {
+             color: #FFD700;
+             text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+         }
+         
+         .nav-link::after {
+             content: '';
+             position: absolute;
+             bottom: -2px;
+             left: 50%;
+             width: 0;
+             height: 2px;
+             background: #FFD700;
+             transition: all 0.3s ease;
+             transform: translateX(-50%);
+         }
+         
+         .nav-link:hover::after {
+             width: 80%;
+         }
+         
+         .connect-wallet-btn {
+             background: rgba(255, 215, 0, 0.2);
+             color: #FFD700;
+             border: 1px solid rgba(255, 215, 0, 0.3);
+             padding: 0.8rem 1.5rem;
+             border-radius: 25px;
+             font-weight: 500;
+             font-size: 0.9rem;
+             cursor: pointer;
+             transition: all 0.3s ease;
+             backdrop-filter: blur(5px);
+         }
+         
+         .connect-wallet-btn:hover {
+             transform: translateY(-2px);
+             background: rgba(255, 215, 0, 0.3);
+             border-color: rgba(255, 215, 0, 0.5);
+             box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+         }
+         
+         /* Floating Casino Particles */
+         .casino-particle {
+             position: fixed;
+             width: 4px;
+             height: 4px;
+             background: #FFD700;
+             border-radius: 50%;
+             animation: float 6s ease-in-out infinite;
+             z-index: 1;
+         }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.7; }
+            50% { transform: translateY(-20px) rotate(180deg); opacity: 1; }
         }
         
                                                                                                                                                .hero {
                 min-height: 100vh;
                 display: flex;
-                align-items: flex-start;
+                align-items: center;
                 justify-content: center;
                 text-align: center;
                 position: relative;
-                padding: 1rem 0;
+                padding: 8rem 0 4rem 0;
+                z-index: 2;
             }
         
         
         
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                .hero-content {
-                   max-width: 800px;
-                   padding: 0.5rem;
+                   max-width: 1200px;
+                   padding: 0 2rem;
                    position: relative;
                    z-index: 2;
                    display: flex;
                    flex-direction: column;
                    align-items: center;
-                   gap: 0.3rem;
-                   margin-top: 2rem;
+                   width: 100%;
                }
+               
+               /* Prize Explanation */
+               .prize-explanation {
+                   text-align: center;
+                   margin-bottom: 4rem;
+                   max-width: 800px;
+               }
+               
+               .prize-explanation p {
+                   color: white;
+                   font-size: 1.2rem;
+                   line-height: 1.6;
+                   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+               }
+               
+                               .hero-logo-section {
+                    text-align: center;
+                    margin-bottom: 4rem;
+                    padding: 0;
+                }
+                
+                .main-content {
+                    display: grid;
+                    grid-template-columns: 1fr 1fr;
+                    gap: 6rem;
+                    max-width: 1200px;
+                    width: 100%;
+                    margin-bottom: 4rem;
+                }
+                
+                .game-section {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                }
+                
+                .info-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3rem;
+                    align-items: center;
+                }
+                
+                                                 .bottom-section {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 3rem;
+                    align-items: center;
+                    padding: 3rem 0;
+                }
+                 
+                 /* Info Cards */
+                 .info-card {
+                     background: rgba(0, 0, 0, 0.7);
+                     backdrop-filter: blur(15px);
+                     border: 1px solid rgba(255, 215, 0, 0.2);
+                     border-radius: 15px;
+                     padding: 2.5rem;
+                     width: 100%;
+                     max-width: 380px;
+                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                     transition: all 0.3s ease;
+                 }
+                 
+                 .info-card:hover {
+                     transform: translateY(-3px);
+                     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+                     border-color: rgba(255, 215, 0, 0.4);
+                 }
+                 
+                 .info-card h3 {
+                     color: #FFD700;
+                     font-size: 1.4rem;
+                     font-weight: bold;
+                     margin-bottom: 1.5rem;
+                     text-align: center;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                 }
+                 
+                 .info-card ul {
+                     list-style: none;
+                     padding: 0;
+                     margin: 0;
+                 }
+                 
+                 .info-card li {
+                     color: white;
+                     font-size: 0.95rem;
+                     margin-bottom: 0.7rem;
+                     padding-left: 1.5rem;
+                     position: relative;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+                 }
+                 
+                 .info-card li::before {
+                     content: '✨';
+                     position: absolute;
+                     left: 0;
+                     top: 0;
+                 }
+                 
+                 /* Prize Breakdown */
+                 .prize-breakdown {
+                     display: flex;
+                     flex-direction: column;
+                     gap: 1rem;
+                 }
+                 
+                 .prize-item {
+                     display: flex;
+                     justify-content: space-between;
+                     align-items: center;
+                     padding: 1rem;
+                     background: rgba(255, 215, 0, 0.1);
+                     border-radius: 10px;
+                     border: 1px solid rgba(255, 215, 0, 0.2);
+                 }
+                 
+                 .prize-item .rank {
+                     color: #FFD700;
+                     font-weight: bold;
+                     font-size: 1.2rem;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                 }
+                 
+                                   .prize-item .percentage {
+                      color: white;
+                      font-weight: bold;
+                      font-size: 1.1rem;
+                      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                  }
+                  
+                  /* Section Styles */
+                                     .section-container {
+                       max-width: 1200px;
+                       margin: 0 auto;
+                       padding: 6rem 2rem;
+                   }
+                  
+                                     .section-title {
+                       text-align: center;
+                       font-size: 2.5rem;
+                       font-weight: bold;
+                       color: #FFD700;
+                       margin-bottom: 4rem;
+                       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                   }
+                  
+                  /* Leaderboard Section */
+                  .leaderboard-section {
+                      background: transparent;
+                  }
+                  
+                  .leaderboard-content {
+                      display: flex;
+                      justify-content: center;
+                  }
+                  
+                                     .leaderboard-card {
+                       background: transparent;
+                       border: 1px solid rgba(255, 215, 0, 0.2);
+                       border-radius: 15px;
+                       padding: 2.5rem;
+                       width: 100%;
+                       max-width: 500px;
+                   }
+                  
+                                     .leaderboard-card h3 {
+                       color: #FFD700;
+                       font-size: 1.5rem;
+                       text-align: center;
+                       margin-bottom: 2rem;
+                       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                   }
+                  
+                  .leaderboard-list {
+                      display: flex;
+                      flex-direction: column;
+                      gap: 1rem;
+                  }
+                  
+                  .leaderboard-item {
+                      display: flex;
+                      justify-content: space-between;
+                      align-items: center;
+                      padding: 1rem 1.5rem;
+                      background: transparent;
+                      border-radius: 10px;
+                      border: 1px solid rgba(255, 215, 0, 0.2);
+                  }
+                  
+                  .leaderboard-item .rank {
+                      color: #FFD700;
+                      font-weight: bold;
+                      font-size: 1.2rem;
+                      min-width: 40px;
+                  }
+                  
+                  .leaderboard-item .player {
+                      color: white;
+                      font-weight: 500;
+                      flex: 1;
+                      text-align: center;
+                  }
+                  
+                  .leaderboard-item .score {
+                      color: #FFD700;
+                      font-weight: bold;
+                      font-size: 1.1rem;
+                      min-width: 80px;
+                      text-align: right;
+                  }
+                  
+                  /* About Section */
+                  .about-section {
+                      background: transparent;
+                  }
+                  
+                  .about-content {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                      gap: 2rem;
+                  }
+                  
+                                     .about-card {
+                       background: transparent;
+                       border: 1px solid rgba(255, 215, 0, 0.2);
+                       border-radius: 15px;
+                       padding: 2.5rem;
+                       text-align: center;
+                       transition: all 0.3s ease;
+                   }
+                  
+                                     .about-card:hover {
+                       transform: translateY(-3px);
+                       border-color: rgba(255, 215, 0, 0.4);
+                   }
+                  
+                                     .about-card h3 {
+                       color: #FFD700;
+                       font-size: 1.4rem;
+                       margin-bottom: 1rem;
+                       text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                   }
+                  
+                  .about-card p {
+                      color: white;
+                      line-height: 1.6;
+                      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+                  }
         
                                                                                                                                                .hero-logo {
                 display: flex;
                 align-items: center;
                 justify-content: center;
-                margin-bottom: 0rem;
+                margin-bottom: 0;
                 transition: all 0.3s ease;
-                filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.5));
+                filter: drop-shadow(0 15px 40px rgba(255, 215, 0, 0.6));
+                animation: neonPulse 3s ease-in-out infinite alternate;
             }
           
           .hero-logo:hover {
               transform: scale(1.05);
               filter: drop-shadow(0 15px 40px rgba(255, 215, 0, 0.8));
+              animation: neonPulse 0.5s ease-in-out infinite alternate;
+          }
+          
+          @keyframes neonPulse {
+              0% { filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.5)) drop-shadow(0 0 20px rgba(255, 215, 0, 0.3)); }
+              100% { filter: drop-shadow(0 15px 40px rgba(255, 215, 0, 0.8)) drop-shadow(0 0 40px rgba(255, 215, 0, 0.6)); }
           }
          
          .hero-logo img {
              transition: all 0.3s ease;
+             max-width: 400px;
+             height: auto;
          }
         
         .hero-title {
@@ -107,6 +495,27 @@
             display: inline-block;
             transition: all 0.3s ease;
             margin: 0;
+            position: relative;
+        }
+        
+        .hero-play-btn-image::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            background: linear-gradient(45deg, #ff0080, #ff8c00, #40e0d0, #ee82ee, #ff0080);
+            background-size: 400% 400%;
+            animation: casinoGlow 3s ease infinite;
+            border-radius: 20px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .hero-play-btn-image:hover::before {
+            opacity: 0.7;
         }
         
         .hero-play-btn-image:hover {
@@ -118,16 +527,49 @@
             max-width: 250px;
             height: auto;
             display: block;
+            animation: casinoButtonPulse 2s ease-in-out infinite;
         }
         
         .hero-play-btn-image:hover img {
             filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+            animation: casinoButtonPulse 0.5s ease-in-out infinite;
+        }
+        
+        @keyframes casinoGlow {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        @keyframes casinoButtonPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
         }
          
-        .hero-leaderboard-btn-image {
+                 .hero-leaderboard-btn-image {
             display: inline-block;
             transition: all 0.3s ease;
             margin: 0;
+            position: relative;
+        }
+        
+        .hero-leaderboard-btn-image::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            background: linear-gradient(45deg, #00ff88, #00bfff, #ff69b4, #ffd700, #00ff88);
+            background-size: 400% 400%;
+            animation: casinoGlow 4s ease infinite;
+            border-radius: 15px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .hero-leaderboard-btn-image:hover::before {
+            opacity: 0.6;
         }
          
         .hero-leaderboard-btn-image:hover {
@@ -139,48 +581,44 @@
             max-width: 200px;
             height: auto;
             display: block;
+            animation: casinoButtonPulse 2.5s ease-in-out infinite;
         }
          
         .hero-leaderboard-btn-image:hover img {
             filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+            animation: casinoButtonPulse 0.6s ease-in-out infinite;
         }
         
-                 /* Connect Wallet Button */
-         .connect-wallet-btn {
-             position: fixed;
-             top: 1rem;
-             right: 1rem;
-             z-index: 1000;
-         }
-        
-        .wallet-btn {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #000;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 14px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
-        }
-        
-        .wallet-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
-        }
+                 
           
                      /* Contract Address Box */
                                                .contract-address-box {
-                 background: rgba(255, 255, 255, 0.05);
-                 backdrop-filter: blur(5px);
-                 border: 1px solid rgba(255, 255, 255, 0.1);
-                 border-radius: 10px;
-                 padding: 0.5rem;
-                 margin-top: 0.8rem;
+                 background: rgba(0, 0, 0, 0.6);
+                 backdrop-filter: blur(10px);
+                 border: 1px solid rgba(255, 215, 0, 0.2);
+                 border-radius: 12px;
+                 padding: 1.5rem;
+                 margin-top: 0;
                  text-align: center;
-                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+                 box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+                 position: relative;
+                 overflow: hidden;
+             }
+             
+             .contract-address-box::before {
+                 content: '';
+                 position: absolute;
+                 top: 0;
+                 left: -100%;
+                 width: 100%;
+                 height: 100%;
+                 background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+                 animation: casinoShine 3s ease-in-out infinite;
+             }
+             
+             @keyframes casinoShine {
+                 0% { left: -100%; }
+                 100% { left: 100%; }
              }
           
                      .contract-address-box h3 {
@@ -233,23 +671,40 @@
                display: inline-flex;
                align-items: center;
                gap: 8px;
-               background: rgba(255, 255, 255, 0.1);
+               background: linear-gradient(135deg, rgba(255, 0, 150, 0.8), rgba(0, 255, 255, 0.8));
                backdrop-filter: blur(10px);
-               border: 1px solid rgba(255, 255, 255, 0.2);
+               border: 2px solid rgba(255, 255, 255, 0.3);
                border-radius: 25px;
                padding: 12px 20px;
                color: white;
                text-decoration: none;
                font-size: 16px;
-               font-weight: 500;
+               font-weight: 600;
                transition: all 0.3s ease;
-               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+               box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 0, 150, 0.3);
+               position: relative;
+               overflow: hidden;
+           }
+           
+           .x-link::before {
+               content: '';
+               position: absolute;
+               top: 0;
+               left: -100%;
+               width: 100%;
+               height: 100%;
+               background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+               transition: left 0.5s ease;
+           }
+           
+           .x-link:hover::before {
+               left: 100%;
            }
            
            .x-link:hover {
-               background: rgba(255, 255, 255, 0.2);
-               transform: translateY(-2px);
-               box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+               background: linear-gradient(135deg, rgba(255, 0, 150, 1), rgba(0, 255, 255, 1));
+               transform: translateY(-3px) scale(1.05);
+               box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4), 0 0 25px rgba(255, 0, 150, 0.5);
            }
            
                        .x-icon {
@@ -266,23 +721,52 @@
               .prize-pool-image {
                   margin-top: 0.8rem;
                   transition: all 0.3s ease;
+                  position: relative;
+              }
+              
+              .prize-pool-image::before {
+                  content: '';
+                  position: absolute;
+                  top: -5px;
+                  left: -5px;
+                  right: -5px;
+                  bottom: -5px;
+                  background: linear-gradient(45deg, #ffd700, #ffed4e, #ffd700);
+                  background-size: 200% 200%;
+                  animation: prizeGlow 2s ease-in-out infinite;
+                  border-radius: 10px;
+                  z-index: -1;
+                  opacity: 0.3;
               }
             
                          .prize-pool-image:hover {
-                 transform: scale(1.02);
-                 filter: brightness(1.05) drop-shadow(0 4px 15px rgba(255, 255, 255, 0.2));
+                 transform: scale(1.05);
+                 filter: brightness(1.1) drop-shadow(0 8px 25px rgba(255, 215, 0, 0.6));
+             }
+             
+             .prize-pool-image:hover::before {
+                 opacity: 0.6;
+                 animation: prizeGlow 0.5s ease-in-out infinite;
+             }
+             
+             @keyframes prizeGlow {
+                 0%, 100% { background-position: 0% 50%; }
+                 50% { background-position: 100% 50%; }
              }
              
                                                                                                                                                                                                        /* Games Grid */
-                                                .games-grid {
-                     display: flex;
-                     flex-direction: column;
-                     align-items: center;
-                     gap: 2rem;
-                     margin: 2rem auto;
-                     max-width: 400px;
+                                                                                                 .games-section {
                      width: 100%;
+                     margin-bottom: 4rem;
                  }
+                 
+                 .games-grid {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                      gap: 2rem;
+                      width: 100%;
+                      max-width: 1200px;
+                  }
                 
                                  .game-grid-header {
                      text-align: center;
@@ -291,17 +775,12 @@
                  }
                  
                  .game-grid-header h2 {
-                     color: rgba(255, 255, 255, 0.9);
-                     font-size: 1.8rem;
+                     color: #FFD700;
+                     font-size: 1.6rem;
                      font-weight: 600;
-                     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
                      margin: 0;
-                     letter-spacing: 1px;
-                     background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(255, 215, 0, 0.7));
-                     -webkit-background-clip: text;
-                     -webkit-text-fill-color: transparent;
-                     background-clip: text;
-                     opacity: 0.85;
+                     letter-spacing: 0.5px;
                  }
                  
                  .games-grid .game-card {
@@ -309,30 +788,33 @@
                      max-width: none;
                  }
                
-               .game-card {
-                   background: rgba(0, 0, 0, 0.4);
-                   backdrop-filter: blur(15px);
-                   border: 1px solid rgba(255, 215, 0, 0.3);
-                   border-radius: 20px;
-                   overflow: hidden;
-                   transition: all 0.3s ease;
-                   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-               }
+                                                               .game-card {
+                     background: rgba(0, 0, 0, 0.7);
+                     backdrop-filter: blur(15px);
+                     border: 1px solid rgba(255, 215, 0, 0.2);
+                     border-radius: 15px;
+                     overflow: hidden;
+                     transition: all 0.3s ease;
+                     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                     position: relative;
+                     width: 100%;
+                 }
                
-               .game-card:hover {
-                   transform: translateY(-5px);
-                   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2);
-                   border-color: rgba(255, 215, 0, 0.6);
-               }
+                                                               .game-card:hover {
+                     transform: translateY(-3px);
+                     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+                     border-color: rgba(255, 215, 0, 0.4);
+                 }
                
-                               .game-preview {
-                    position: relative;
-                    height: 250px;
-                    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                }
+                                                                                                                               .game-preview {
+                      position: relative;
+                      height: 280px;
+                      background: rgba(0, 0, 0, 0.5);
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      overflow: hidden;
+                  }
                
                .game-overlay {
                    position: absolute;
@@ -369,48 +851,56 @@
                    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
                }
                
-               .coming-soon-overlay {
-                   position: absolute;
-                   top: 0;
-                   left: 0;
-                   width: 100%;
-                   height: 100%;
-                   background: rgba(0, 0, 0, 0.8);
-                   display: flex;
-                   align-items: center;
-                   justify-content: center;
-                   color: #FFD700;
-                   font-weight: bold;
-                   font-size: 18px;
-                   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-               }
+                                .coming-soon-overlay {
+                     position: absolute;
+                     top: 0;
+                     left: 0;
+                     width: 100%;
+                     height: 100%;
+                     background: rgba(0, 0, 0, 0.7);
+                     display: flex;
+                     align-items: center;
+                     justify-content: center;
+                     color: #FFD700;
+                     font-weight: bold;
+                     font-size: 1.2rem;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                 }
+                 
+                 .game-card.coming-soon {
+                     opacity: 0.7;
+                 }
+                 
+                 .game-card.coming-soon:hover {
+                     opacity: 0.9;
+                 }
+                 
+                 .game-card.active {
+                     opacity: 1;
+                 }
                
-               .game-info {
-                   padding: 1.5rem;
-                   text-align: center;
-               }
+                                .game-info {
+                     padding: 2rem;
+                     text-align: center;
+                 }
                
-                               .game-info h3 {
-                    margin: 0 0 0.5rem 0;
-                    color: #FFD700;
-                    font-size: 1.5rem;
-                    font-weight: bold;
-                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.9);
-                    letter-spacing: 1px;
-                    background: linear-gradient(135deg, #FFD700, #FFA500);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                }
+                                                                .game-info h3 {
+                     margin: 0 0 0.5rem 0;
+                     color: #FFD700;
+                     font-size: 1.4rem;
+                     font-weight: bold;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.9);
+                     letter-spacing: 0.5px;
+                 }
                 
-                .game-info p {
-                    margin: 0 0 1rem 0;
-                    color: rgba(255, 255, 255, 0.9);
-                    font-size: 1rem;
-                    font-weight: 500;
-                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
-                    letter-spacing: 0.5px;
-                }
+                                 .game-info p {
+                     margin: 0 0 1rem 0;
+                     color: rgba(255, 255, 255, 0.9);
+                     font-size: 0.95rem;
+                     font-weight: 500;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+                     letter-spacing: 0.3px;
+                 }
                
                .game-stats {
                    display: flex;
@@ -426,24 +916,116 @@
                     letter-spacing: 0.3px;
                 }
                 
-                .prize-pool {
-                    color: #FFD700 !important;
-                    font-weight: bold;
-                    font-size: 1rem !important;
-                    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8) !important;
-                    background: linear-gradient(135deg, #FFD700, #FFA500);
-                    -webkit-background-clip: text;
-                    -webkit-text-fill-color: transparent;
-                    background-clip: text;
-                }
+                                 .prize-pool {
+                     color: #FFD700 !important;
+                     font-weight: bold;
+                     font-size: 0.9rem !important;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+                 }
+                 
+                 .status {
+                     color: #FFD700 !important;
+                     font-weight: bold;
+                     font-size: 0.9rem !important;
+                     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8) !important;
+                 }
                
-               #miniGameCanvas {
-                   display: block;
-                   background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-                   border-radius: 0;
-                   width: 100%;
-                   height: 100%;
-               }
+                               #miniGameCanvas {
+                    display: block;
+                    background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+                    border-radius: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+                
+                /* Info Cards */
+                .info-card {
+                    background: linear-gradient(135deg, rgba(0, 0, 0, 0.7), rgba(20, 20, 40, 0.8));
+                    backdrop-filter: blur(15px);
+                    border: 2px solid rgba(255, 215, 0, 0.3);
+                    border-radius: 20px;
+                    padding: 1.5rem;
+                    width: 100%;
+                    max-width: 350px;
+                    transition: all 0.3s ease;
+                    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+                }
+                
+                .info-card:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2);
+                    border-color: rgba(255, 215, 0, 0.5);
+                }
+                
+                .info-card h3 {
+                    color: #FFD700;
+                    font-size: 1.3rem;
+                    font-weight: bold;
+                    margin: 0 0 1rem 0;
+                    text-align: center;
+                    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+                }
+                
+                .info-card ul {
+                    list-style: none;
+                    padding: 0;
+                    margin: 0;
+                }
+                
+                .info-card li {
+                    color: rgba(255, 255, 255, 0.9);
+                    font-size: 0.95rem;
+                    margin: 0.5rem 0;
+                    padding: 0.3rem 0;
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+                    position: relative;
+                    padding-left: 1.5rem;
+                }
+                
+                .info-card li::before {
+                    content: '▶';
+                    color: #FFD700;
+                    position: absolute;
+                    left: 0;
+                    font-size: 0.8rem;
+                }
+                
+                /* Prize Breakdown */
+                .prize-breakdown {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 0.8rem;
+                }
+                
+                .prize-item {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    padding: 0.8rem 1rem;
+                    background: rgba(255, 215, 0, 0.1);
+                    border-radius: 10px;
+                    border: 1px solid rgba(255, 215, 0, 0.2);
+                    transition: all 0.3s ease;
+                }
+                
+                .prize-item:hover {
+                    background: rgba(255, 215, 0, 0.2);
+                    transform: scale(1.02);
+                }
+                
+                .prize-item .rank {
+                    color: #FFD700;
+                    font-weight: bold;
+                    font-size: 1.1rem;
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                }
+                
+                .prize-item .percentage {
+                    color: white;
+                    font-weight: bold;
+                    font-size: 1.2rem;
+                    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+                }
          
          /* Animated Background Elements */
          .animated-background {
@@ -590,38 +1172,145 @@
               }
           }
         
-        @media (max-width: 768px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .hero-tagline {
-                font-size: 1.1rem;
-            }
-            
-            .hero-logo img {
-                max-width: 300px;
-            }
-            
-            .hero-play-btn {
-                padding: 0.8rem 2.5rem;
-                font-size: 1.3rem;
-            }
-            
-                         .hero-play-btn-image img {
-                 max-width: 200px;
-             }
-             
-             .hero-leaderboard-btn-image img {
-                 max-width: 160px;
-             }
-             
-             .hero-buttons {
-                 flex-direction: column;
-                 gap: 1.5rem;
-             }
-             
-                           /* Mobile Animation Adjustments */
+                 /* Admin Controls */
+         .admin-controls {
+             position: fixed;
+             top: 1rem;
+             left: 1rem;
+             z-index: 1000;
+             background: rgba(0, 0, 0, 0.8);
+             padding: 1rem;
+             border-radius: 10px;
+             backdrop-filter: blur(10px);
+             border: 1px solid rgba(255, 255, 255, 0.2);
+         }
+
+         .token-gating-control {
+             display: flex;
+             align-items: center;
+             gap: 1rem;
+         }
+
+         .token-gating-status {
+             color: white;
+             font-weight: bold;
+             font-size: 0.9rem;
+         }
+
+         .status-enabled {
+             color: #4CAF50;
+         }
+
+         .status-disabled {
+             color: #f44336;
+         }
+
+         /* Toggle Switch */
+         .toggle-switch {
+             position: relative;
+             display: inline-block;
+             width: 60px;
+             height: 34px;
+         }
+
+         .toggle-switch input {
+             opacity: 0;
+             width: 0;
+             height: 0;
+         }
+
+         .slider {
+             position: absolute;
+             cursor: pointer;
+             top: 0;
+             left: 0;
+             right: 0;
+             bottom: 0;
+             background-color: #ccc;
+             transition: .4s;
+             border-radius: 34px;
+         }
+
+         .slider:before {
+             position: absolute;
+             content: "";
+             height: 26px;
+             width: 26px;
+             left: 4px;
+             bottom: 4px;
+             background-color: white;
+             transition: .4s;
+             border-radius: 50%;
+         }
+
+         input:checked + .slider {
+             background-color: #4CAF50;
+         }
+
+         input:checked + .slider:before {
+             transform: translateX(26px);
+         }
+         
+                   @media (max-width: 768px) {
+              .nav-container {
+                  padding: 0 1rem;
+              }
+              
+              .nav-menu {
+                  display: none;
+              }
+              
+              .connect-wallet-btn {
+                  padding: 0.6rem 1rem;
+                  font-size: 0.8rem;
+              }
+              
+              .hero-content {
+                  padding: 1rem;
+              }
+              
+              .main-content {
+                  grid-template-columns: 1fr;
+                  gap: 2rem;
+                  padding: 0 1rem;
+              }
+              
+              .hero-logo img {
+                  max-width: 280px;
+              }
+              
+              .hero-play-btn-image img {
+                  max-width: 200px;
+              }
+              
+              .hero-leaderboard-btn-image img {
+                  max-width: 160px;
+              }
+              
+              .info-card {
+                  max-width: 100%;
+                  padding: 1.5rem;
+              }
+              
+              .game-card {
+                  max-width: 100%;
+              }
+              
+              .game-preview {
+                  height: 250px;
+              }
+              
+              .contract-address-box {
+                  max-width: 100%;
+                  margin: 0 1rem;
+              }
+              
+              .contract-input-container input {
+                  min-width: 200px;
+                  font-size: 10px;
+              }
+              
+              /* Mobile Animation Adjustments */
               .cloud {
                   opacity: 0.3;
               }
@@ -654,12 +1343,48 @@
               .angel-1, .angel-2, .angel-3, .angel-4 {
                   animation-duration: 25s;
               }
-        
+          }
     </style>
 </head>
 <body>
+    <!-- Casino Particles -->
+    <div class="casino-particle" style="top: 10%; left: 10%; animation-delay: 0s;"></div>
+    <div class="casino-particle" style="top: 20%; left: 80%; animation-delay: 1s;"></div>
+    <div class="casino-particle" style="top: 60%; left: 15%; animation-delay: 2s;"></div>
+    <div class="casino-particle" style="top: 80%; left: 70%; animation-delay: 3s;"></div>
+    <div class="casino-particle" style="top: 30%; left: 60%; animation-delay: 4s;"></div>
+    <div class="casino-particle" style="top: 70%; left: 85%; animation-delay: 5s;"></div>
+    
+    <!-- Navigation Header -->
+    <header class="nav-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <img src="assets/heavens gate logo.png" alt="Heaven's Gate" style="height: 40px; width: auto;">
+                </div>
+                <ul class="nav-menu">
+                    <li class="nav-item">
+                        <a href="#home" class="nav-link">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#games" class="nav-link">Games</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#leaderboard" class="nav-link">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#about" class="nav-link">About</a>
+                    </li>
+                </ul>
+                <div class="nav-connect">
+                    <!-- Connect Wallet button will be inserted by ConnectWallet component -->
+                </div>
+            </div>
+        </nav>
+    </header>
+    
          <main>
-         <section class="hero">
+         <section id="home" class="hero">
              <!-- Animated Background Elements -->
              <div class="animated-background">
                  <div class="clouds-container">
@@ -677,63 +1402,130 @@
                  </div>
              </div>
              
-                                               <div class="hero-content">
-                        <div class="connect-wallet-btn">
-                            <button class="wallet-btn">Connect Wallet</button>
-                        </div>
-                        <div class="hero-logo">
-                            <img src="assets/heavens gate logo.png" alt="Heaven's Gate Logo" style="max-width: 300px; height: auto;">
-                        </div>
-                   
-                                       <div class="games-grid">
-                        <div class="game-grid-header">
-                            <h2>PLAY.SCORE.WIN $HG</h2>
-                        </div>
-                                                <div class="game-card">
-                            <div class="game-preview">
-                                <img src="assets/HEAVENS GATES MINI PLAYER.png" alt="Heaven's Gate Preview" style="width: 100%; height: 100%; object-fit: cover;">
-                                <div class="game-overlay">
-                                    <a href="play.html" class="play-now-btn">PLAY NOW</a>
-                                </div>
-                            </div>
-                            <div class="game-info">
-                                <h3>Heaven Gates</h3>
-                                <p>Flap through heavenly gates</p>
-                                <div class="game-stats">
-                                    <span class="prize-pool">Prize Pool: TBD</span>
-                                    <span class="entry-fee">Entry: TBD</span>
-                                </div>
-                            </div>
-                        </div>
-                   </div>
-                   
-                   <div class="hero-buttons">
-                        <a href="leaderboard.html" class="hero-leaderboard-btn-image">
-                            <img src="assets/leaderboard (2).png" alt="LEADERBOARD" style="max-width: 200px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
-                        </a>
-                    </div>
-                   
-                   <div class="prize-pool-image">
-                       <img src="assets/prizepool.png" alt="Prize Pool" style="max-width: 300px; height: auto;">
-                   </div>
-                   
-                                      <div class="contract-address-box">
-                        <h3>Contract Address</h3>
-                        <div class="contract-input-container">
-                                                         <input type="text" id="contractAddress" value="APXWjCnXvRncq7UWeDPDCEFCdRyJj3oApkyzuGGoR777" readonly>
-                            <button onclick="copyContractAddress()" class="copy-btn">📋</button>
+                                                                                                                                                                                               <div class="hero-content">
+                    
+                    <!-- Token Gating Toggle (Admin Only) -->
+                    <div id="adminControls" class="admin-controls" style="display: none;">
+                        <div class="token-gating-control">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="tokenGatingToggle">
+                                <span class="slider"></span>
+                            </label>
+                            <span id="tokenGatingStatus" class="token-gating-status">Token Gating: ENABLED</span>
                         </div>
                     </div>
                     
-                                      <div class="social-link">
-                                              <a href="https://x.com/playheavensgate" target="_blank" class="x-link">
-                            <span class="x-icon">X</span>
-                            <span class="x-text">Follow us on X</span>
-                        </a>
-                   </div>
+                                        <!-- Prize Pool Explanation -->
+                    <div class="prize-explanation">
+                        <p>Connect your wallet, pay the entry fee, and compete for real prizes. Top 3 players win 50%, 30%, and 20% of the prize pool respectively.</p>
+                    </div>
+                    
+                    <!-- Games Section -->
+                    <div id="games" class="games-section">
+                        <h2 class="section-title">Games</h2>
+                        <div class="games-grid">
+                            <!-- Heaven's Gate (Active) -->
+                            <div class="game-card active">
+                                <div class="game-preview">
+                                    <img src="assets/HEAVENS GATES MINI PLAYER.png" alt="Heaven's Gate Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <div class="game-overlay">
+                                        <a href="play.html" class="play-now-btn">PLAY NOW</a>
+                                    </div>
+                                </div>
+                                <div class="game-info">
+                                    <h3>Heaven's Gate</h3>
+                                    <p>Flap through heavenly gates</p>
+                                    <div class="game-stats">
+                                        <span class="prize-pool">Prize Pool: Active</span>
+                                        <span class="entry-fee">Entry: 100 APX</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                                                         <!-- Coming Soon Games -->
+                             <div class="game-card coming-soon">
+                                 <div class="game-preview">
+                                     <div class="coming-soon-overlay">
+                                         <span>Coming Soon</span>
+                                     </div>
+                                 </div>
+                                 <div class="game-info">
+                                     <h3>Celestial Wings</h3>
+                                     <p>Soar through divine realms</p>
+                                     <div class="game-stats">
+                                         <span class="status">Coming Soon</span>
+                                     </div>
+                                 </div>
+                             </div>
+                             
+                             <div class="game-card coming-soon">
+                                 <div class="game-preview">
+                                     <div class="coming-soon-overlay">
+                                         <span>Coming Soon</span>
+                                     </div>
+                                 </div>
+                                 <div class="game-info">
+                                     <h3>Divine Ascension</h3>
+                                     <p>Climb to heavenly heights</p>
+                                     <div class="game-stats">
+                                         <span class="status">Coming Soon</span>
+                                     </div>
+                                 </div>
+                             </div>
+                        </div>
+                    </div>
               </div>
          </section>
          
+         <!-- Leaderboard Section -->
+         <section id="leaderboard" class="leaderboard-section">
+             <div class="section-container">
+                 <h2 class="section-title">🏆 Leaderboard</h2>
+                 <div class="leaderboard-content">
+                     <div class="leaderboard-card">
+                         <h3>Top Players</h3>
+                         <div class="leaderboard-list">
+                             <div class="leaderboard-item">
+                                 <span class="rank">1</span>
+                                 <span class="player">Player1</span>
+                                 <span class="score">1,250</span>
+                             </div>
+                             <div class="leaderboard-item">
+                                 <span class="rank">2</span>
+                                 <span class="player">Player2</span>
+                                 <span class="score">1,180</span>
+                             </div>
+                             <div class="leaderboard-item">
+                                 <span class="rank">3</span>
+                                 <span class="player">Player3</span>
+                                 <span class="score">1,120</span>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </section>
+         
+         <!-- About Section -->
+         <section id="about" class="about-section">
+             <div class="section-container">
+                 <h2 class="section-title">About Heaven's Gate</h2>
+                 <div class="about-content">
+                     <div class="about-card">
+                         <h3>🎮 The Game</h3>
+                         <p>Heaven's Gate is a blockchain-powered flappy bird game where players compete for real prizes. Connect your Solana wallet, pay the entry fee, and flap your way to victory!</p>
+                     </div>
+                     <div class="about-card">
+                         <h3>💰 Prize Pool</h3>
+                         <p>Every game contributes to the prize pool. The top 3 players take home 50%, 30%, and 20% of the total pool respectively.</p>
+                     </div>
+                     <div class="about-card">
+                         <h3>🔗 Blockchain</h3>
+                         <p>Built on Solana for fast, low-cost transactions. All scores and payouts are verified on-chain for complete transparency.</p>
+                     </div>
+                 </div>
+             </div>
+         </section>
          
      </main>
 
@@ -759,7 +1551,16 @@
            
                                                
        </script>
-     
+    
+    <!-- Solana Integration -->
+    <script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.87.6/lib/index.iife.min.js"></script>
+    <script>
+        // Make solanaWeb3 globally available
+        window.solanaWeb3 = solanaWeb3;
+        console.log('🌐 Solana Web3 loaded:', typeof solanaWeb3);
+    </script>
+    <script src="scripts/wallet-provider.js"></script>
+    <script src="scripts/ConnectWallet.js"></script>
      
  </body>
  </html>
