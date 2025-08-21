@@ -16,44 +16,47 @@
             background-attachment: fixed;
             min-height: 100vh;
             color: white;
+            font-family: 'Arial', sans-serif;
+            overflow-x: hidden;
         }
         
-                                   .hero {
-              min-height: 100vh;
-              display: flex;
-              align-items: flex-start;
-              justify-content: center;
-              text-align: center;
-              position: relative;
-              padding: 1rem 0;
+                                                                                                                                               .hero {
+                min-height: 100vh;
+                display: flex;
+                align-items: flex-start;
+                justify-content: center;
+                text-align: center;
+                position: relative;
+                padding: 1rem 0;
+            }
+        
+        
+        
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               .hero-content {
+                   max-width: 800px;
+                   padding: 0.5rem;
+                   position: relative;
+                   z-index: 2;
+                   display: flex;
+                   flex-direction: column;
+                   align-items: center;
+                   gap: 0.3rem;
+                   margin-top: 2rem;
+               }
+        
+                                                                                                                                               .hero-logo {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 0rem;
+                transition: all 0.3s ease;
+                filter: drop-shadow(0 10px 30px rgba(255, 215, 0, 0.5));
+            }
+          
+          .hero-logo:hover {
+              transform: scale(1.05);
+              filter: drop-shadow(0 15px 40px rgba(255, 215, 0, 0.8));
           }
-        
-        
-        
-                                                                                                                                                                                                                                                                                               .hero-content {
-                 max-width: 800px;
-                 padding: 0.5rem;
-                 position: relative;
-                 z-index: 2;
-                 display: flex;
-                 flex-direction: column;
-                 align-items: center;
-                 gap: 0.3rem;
-                 margin-top: 2rem;
-             }
-        
-                                                                       .hero-logo {
-               display: flex;
-               align-items: center;
-               justify-content: center;
-               margin-bottom: 0rem;
-               transition: all 0.3s ease;
-           }
-         
-         .hero-logo:hover {
-             transform: scale(1.1);
-             filter: brightness(1.2) drop-shadow(0 12px 30px rgba(255, 255, 255, 0.4));
-         }
          
          .hero-logo img {
              transition: all 0.3s ease;
@@ -139,6 +142,32 @@
          
         .hero-leaderboard-btn-image:hover img {
             filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+        }
+        
+                 /* Connect Wallet Button */
+         .connect-wallet-btn {
+             position: fixed;
+             top: 1rem;
+             right: 1rem;
+             z-index: 1000;
+         }
+        
+        .wallet-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+        
+        .wallet-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
         }
           
                      /* Contract Address Box */
@@ -238,10 +267,159 @@
                   transition: all 0.3s ease;
               }
             
-            .prize-pool-image:hover {
-                transform: scale(1.02);
-                filter: brightness(1.05) drop-shadow(0 4px 15px rgba(255, 255, 255, 0.2));
-            }
+                         .prize-pool-image:hover {
+                 transform: scale(1.02);
+                 filter: brightness(1.05) drop-shadow(0 4px 15px rgba(255, 255, 255, 0.2));
+             }
+             
+                                                                                                                                                                                       /* Games Grid */
+                                               .games-grid {
+                     display: grid;
+                     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                     gap: 2rem;
+                     margin: 2rem 0;
+                     max-width: 1200px;
+                     width: 100%;
+                 }
+                
+                                 .game-grid-header {
+                     text-align: center;
+                     margin-bottom: 2rem;
+                     grid-column: 1 / -1;
+                 }
+                 
+                 .game-grid-header h2 {
+                     color: #FFD700;
+                     font-size: 2rem;
+                     font-weight: bold;
+                     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+                     margin: 0;
+                     letter-spacing: 2px;
+                 }
+                 
+                 .games-grid .game-card {
+                     width: 100%;
+                     max-width: none;
+                 }
+               
+               .game-card {
+                   background: rgba(0, 0, 0, 0.4);
+                   backdrop-filter: blur(15px);
+                   border: 1px solid rgba(255, 215, 0, 0.3);
+                   border-radius: 20px;
+                   overflow: hidden;
+                   transition: all 0.3s ease;
+                   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+               }
+               
+               .game-card:hover {
+                   transform: translateY(-5px);
+                   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(255, 215, 0, 0.2);
+                   border-color: rgba(255, 215, 0, 0.6);
+               }
+               
+               .game-preview {
+                   position: relative;
+                   height: 200px;
+                   background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+               }
+               
+               .game-overlay {
+                   position: absolute;
+                   top: 0;
+                   left: 0;
+                   width: 100%;
+                   height: 100%;
+                   background: rgba(0, 0, 0, 0.7);
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+                   opacity: 0;
+                   transition: opacity 0.3s ease;
+               }
+               
+               .game-card:hover .game-overlay {
+                   opacity: 1;
+               }
+               
+               .play-now-btn {
+                   background: linear-gradient(135deg, #FFD700, #FFA500);
+                   color: #000;
+                   padding: 12px 24px;
+                   border-radius: 25px;
+                   text-decoration: none;
+                   font-weight: bold;
+                   font-size: 14px;
+                   transition: all 0.3s ease;
+                   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+               }
+               
+               .play-now-btn:hover {
+                   transform: scale(1.1);
+                   box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+               }
+               
+               .coming-soon-overlay {
+                   position: absolute;
+                   top: 0;
+                   left: 0;
+                   width: 100%;
+                   height: 100%;
+                   background: rgba(0, 0, 0, 0.8);
+                   display: flex;
+                   align-items: center;
+                   justify-content: center;
+                   color: #FFD700;
+                   font-weight: bold;
+                   font-size: 18px;
+                   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+               }
+               
+               .game-info {
+                   padding: 1.5rem;
+                   text-align: center;
+               }
+               
+               .game-info h3 {
+                   margin: 0 0 0.5rem 0;
+                   color: #FFD700;
+                   font-size: 1.3rem;
+                   text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+               }
+               
+               .game-info p {
+                   margin: 0 0 1rem 0;
+                   color: rgba(255, 255, 255, 0.8);
+                   font-size: 0.9rem;
+               }
+               
+               .game-stats {
+                   display: flex;
+                   flex-direction: column;
+                   gap: 0.5rem;
+               }
+               
+               .game-stats span {
+                   font-size: 0.8rem;
+                   color: rgba(255, 255, 255, 0.7);
+                   font-weight: 500;
+               }
+               
+               .prize-pool {
+                   color: #FFD700 !important;
+                   font-weight: bold;
+               }
+               
+               #miniGameCanvas {
+                   display: block;
+                   background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+                   border-radius: 0;
+                   width: 100%;
+                   height: 100%;
+               }
          
          /* Animated Background Elements */
          .animated-background {
@@ -475,38 +653,93 @@
                  </div>
              </div>
              
-             <div class="hero-content">
-                 <div class="hero-logo">
-                     <img src="assets/heavens gate home page.png" alt="Heaven's Gate Home Page Logo" style="max-width: 400px; height: auto;">
-                 </div>
-                                                      <div class="hero-buttons">
-                       <a href="play.html" class="hero-play-btn-image">
-                           <img src="assets/play button.png" alt="PLAY" style="max-width: 250px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
-                       </a>
-                                               <a href="leaderboard.html" class="hero-leaderboard-btn-image">
+                                               <div class="hero-content">
+                        <div class="connect-wallet-btn">
+                            <button class="wallet-btn">Connect Wallet</button>
+                        </div>
+                        <div class="hero-logo">
+                            <img src="assets/heavens gate logo.png" alt="Heaven's Gate Logo" style="max-width: 300px; height: auto;">
+                        </div>
+                   
+                                       <div class="games-grid">
+                        <div class="game-grid-header">
+                            <h2>PLAY.SCORE.WIN $HG</h2>
+                        </div>
+                        <div class="game-card">
+                            <div class="game-preview">
+                                <img src="assets/mini player image.png" alt="Heaven's Gate Preview" style="width: 100%; height: 100%; object-fit: cover;">
+                                <div class="game-overlay">
+                                    <a href="play.html" class="play-now-btn">PLAY NOW</a>
+                                </div>
+                            </div>
+                            <div class="game-info">
+                                <h3>Heaven Gates</h3>
+                                <p>Flap through heavenly gates</p>
+                                <div class="game-stats">
+                                    <span class="prize-pool">Prize Pool: TBD</span>
+                                    <span class="entry-fee">Entry: TBD</span>
+                                </div>
+                            </div>
+                        </div>
+                       
+                       <div class="game-card coming-soon">
+                           <div class="game-preview">
+                               <div class="coming-soon-overlay">
+                                   <span>COMING SOON</span>
+                               </div>
+                           </div>
+                           <div class="game-info">
+                               <h3>Celestial Runner</h3>
+                               <p>Run through the stars</p>
+                               <div class="game-stats">
+                                   <span class="prize-pool">Prize Pool: TBA</span>
+                                   <span class="entry-fee">Entry: TBA</span>
+                               </div>
+                           </div>
+                       </div>
+                       
+                       <div class="game-card coming-soon">
+                           <div class="game-preview">
+                               <div class="coming-soon-overlay">
+                                   <span>COMING SOON</span>
+                               </div>
+                           </div>
+                           <div class="game-info">
+                               <h3>Divine Puzzle</h3>
+                               <p>Solve heavenly mysteries</p>
+                               <div class="game-stats">
+                                   <span class="prize-pool">Prize Pool: TBA</span>
+                                   <span class="entry-fee">Entry: TBA</span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   
+                   <div class="hero-buttons">
+                        <a href="leaderboard.html" class="hero-leaderboard-btn-image">
                             <img src="assets/leaderboard (2).png" alt="LEADERBOARD" style="max-width: 200px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
                         </a>
-                   </div>
+                    </div>
                    
                    <div class="prize-pool-image">
                        <img src="assets/prizepool.png" alt="Prize Pool" style="max-width: 300px; height: auto;">
                    </div>
-                  
-                                     <div class="contract-address-box">
-                       <h3>Contract Address</h3>
-                       <div class="contract-input-container">
-                           <input type="text" id="contractAddress" value="0x1234567890abcdef..." readonly>
-                           <button onclick="copyContractAddress()" class="copy-btn">📋</button>
-                       </div>
-                   </div>
                    
-                                     <div class="social-link">
-                                             <a href="https://x.com/playheavensgate" target="_blank" class="x-link">
-                           <span class="x-icon">X</span>
-                           <span class="x-text">Follow us on X</span>
-                       </a>
-                  </div>
-             </div>
+                                      <div class="contract-address-box">
+                        <h3>Contract Address</h3>
+                        <div class="contract-input-container">
+                            <input type="text" id="contractAddress" value="0x1234567890abcdef..." readonly>
+                            <button onclick="copyContractAddress()" class="copy-btn">📋</button>
+                        </div>
+                    </div>
+                    
+                                      <div class="social-link">
+                                              <a href="https://x.com/playheavensgate" target="_blank" class="x-link">
+                            <span class="x-icon">X</span>
+                            <span class="x-text">Follow us on X</span>
+                        </a>
+                   </div>
+              </div>
          </section>
          
          
@@ -524,14 +757,16 @@
                     const originalText = copyBtn.textContent;
                     copyBtn.textContent = '✅';
                     
-                    setTimeout(() => {
+                                        setTimeout(() => {
                         copyBtn.textContent = originalText;
                     }, 2000);
                } catch (err) {
                    console.error('Failed to copy: ', err);
                }
            }
-      </script>
+           
+                                               
+       </script>
      
      
  </body>
