@@ -18,40 +18,41 @@
             color: white;
         }
         
-                 .hero {
-             min-height: 100vh;
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             text-align: center;
-             position: relative;
-             padding: 2rem 0;
-         }
+                                   .hero {
+              min-height: 100vh;
+              display: flex;
+              align-items: flex-start;
+              justify-content: center;
+              text-align: center;
+              position: relative;
+              padding: 1rem 0;
+          }
         
         
         
-                                                                       .hero-content {
-               max-width: 800px;
-               padding: 1rem;
-               position: relative;
-               z-index: 2;
+                                                                                                                                                                                                                                                                                               .hero-content {
+                 max-width: 800px;
+                 padding: 0.5rem;
+                 position: relative;
+                 z-index: 2;
+                 display: flex;
+                 flex-direction: column;
+                 align-items: center;
+                 gap: 0.3rem;
+                 margin-top: 2rem;
+             }
+        
+                                                                       .hero-logo {
                display: flex;
-               flex-direction: column;
                align-items: center;
-               gap: 0.2rem;
+               justify-content: center;
+               margin-bottom: 0rem;
+               transition: all 0.3s ease;
            }
-        
-                 .hero-logo {
-             display: flex;
-             align-items: center;
-             justify-content: center;
-             margin-bottom: 0.5rem;
-             transition: all 0.3s ease;
-         }
          
          .hero-logo:hover {
-             transform: scale(1.05) rotate(2deg);
-             filter: brightness(1.1) drop-shadow(0 8px 25px rgba(255, 255, 255, 0.3));
+             transform: scale(1.1);
+             filter: brightness(1.2) drop-shadow(0 12px 30px rgba(255, 255, 255, 0.4));
          }
          
          .hero-logo img {
@@ -72,13 +73,14 @@
             text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
         }
         
-                                                                       .hero-buttons {
-               display: flex;
-               flex-direction: column;
-               gap: 0.5rem;
-               align-items: center;
-               justify-content: center;
-           }
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               .hero-buttons {
+                  display: flex;
+                  flex-direction: column;
+                  gap: 0.8rem;
+                  align-items: center;
+                  justify-content: center;
+                  margin: 0rem 0;
+              }
         
         .hero-play-btn {
             background: linear-gradient(135deg, #ff6b6b, #ee5a24);
@@ -100,6 +102,7 @@
         .hero-play-btn-image {
             display: inline-block;
             transition: all 0.3s ease;
+            margin: 0;
         }
         
         .hero-play-btn-image:hover {
@@ -107,41 +110,48 @@
         }
         
         .hero-play-btn-image img {
-            drop-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
+            max-width: 250px;
+            height: auto;
+            display: block;
         }
         
-                 .hero-play-btn-image:hover img {
-             filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
-         }
+        .hero-play-btn-image:hover img {
+            filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+        }
          
-         .hero-leaderboard-btn-image {
-             display: inline-block;
-             transition: all 0.3s ease;
-         }
+        .hero-leaderboard-btn-image {
+            display: inline-block;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
          
-         .hero-leaderboard-btn-image:hover {
-             transform: translateY(-3px) scale(1.05);
-         }
+        .hero-leaderboard-btn-image:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
          
-         .hero-leaderboard-btn-image img {
-             filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
-         }
+        .hero-leaderboard-btn-image img {
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
+            max-width: 200px;
+            height: auto;
+            display: block;
+        }
          
-                   .hero-leaderboard-btn-image:hover img {
-              filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
-          }
+        .hero-leaderboard-btn-image:hover img {
+            filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+        }
           
                      /* Contract Address Box */
-                       .contract-address-box {
-                background: rgba(255, 255, 255, 0.05);
-                backdrop-filter: blur(5px);
-                border: 1px solid rgba(255, 255, 255, 0.1);
-                border-radius: 10px;
-                padding: 0.5rem;
-                margin-top: 2rem;
-                text-align: center;
-                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            }
+                                               .contract-address-box {
+                 background: rgba(255, 255, 255, 0.05);
+                 backdrop-filter: blur(5px);
+                 border: 1px solid rgba(255, 255, 255, 0.1);
+                 border-radius: 10px;
+                 padding: 0.5rem;
+                 margin-top: 0.8rem;
+                 text-align: center;
+                 box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+             }
           
                      .contract-address-box h3 {
                margin: 0 0 0.5rem 0;
@@ -222,11 +232,11 @@
                 text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
             }
             
-                         /* Prize Pool Image */
-             .prize-pool-image {
-                 margin-top: 0.5rem;
-                 transition: all 0.3s ease;
-             }
+                                                   /* Prize Pool Image */
+              .prize-pool-image {
+                  margin-top: 0.8rem;
+                  transition: all 0.3s ease;
+              }
             
             .prize-pool-image:hover {
                 transform: scale(1.02);
