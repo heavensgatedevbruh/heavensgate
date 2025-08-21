@@ -1262,14 +1262,14 @@
               }
               
               .connect-wallet-btn {
-                  padding: 0.5rem 1rem;
-                  font-size: 0.8rem;
+                  padding: 0.6rem 1.2rem;
+                  font-size: 0.85rem;
               }
               
               /* Hero Section */
               .hero {
-                  padding: 2rem 1rem 4rem 1rem;
-                  min-height: 100vh;
+                  padding: 1rem 0.5rem 2rem 0.5rem;
+                  min-height: auto;
               }
               
               .hero-content {
@@ -1279,43 +1279,189 @@
               
               /* Prize Explanation */
               .prize-explanation {
-                  margin-bottom: 2rem;
-                  padding: 0 1rem;
+                  margin-bottom: 1.5rem;
+                  padding: 0 0.5rem;
               }
               
               .prize-explanation p {
-                  font-size: 1rem;
-                  line-height: 1.5;
+                  font-size: 1.1rem;
+                  line-height: 1.4;
+                  text-align: center;
               }
               
               /* Games Section */
               .games-section {
-                  margin-bottom: 2rem;
-                  padding: 0 1rem;
+                  margin-bottom: 1.5rem;
+                  padding: 0 0.5rem;
               }
               
               .section-title {
-                  font-size: 1.8rem;
-                  margin-bottom: 1.5rem;
+                  font-size: 2rem;
+                  margin-bottom: 1rem;
+                  text-align: center;
               }
               
               .games-grid {
                   grid-template-columns: 1fr;
-                  gap: 1.5rem;
+                  gap: 1rem;
                   max-width: 100%;
               }
               
               .game-card {
                   max-width: 100%;
                   margin: 0;
+                  border-radius: 12px;
+              }
+              
+              .game-preview {
+                  height: 220px;
+                  border-radius: 12px 12px 0 0;
+              }
+              
+              .game-info {
+                  padding: 1rem;
+              }
+              
+              .game-info h3 {
+                  font-size: 1.4rem;
+                  margin-bottom: 0.5rem;
+              }
+              
+              .game-info p {
+                  font-size: 1rem;
+                  margin-bottom: 1rem;
+              }
+              
+              .game-stats {
+                  flex-direction: row;
+                  justify-content: space-between;
+                  gap: 1rem;
+              }
+              
+              .game-stats span {
+                  font-size: 0.9rem;
+                  padding: 0.3rem 0.8rem;
+                  border-radius: 15px;
+                  background: rgba(255, 215, 0, 0.1);
+                  border: 1px solid rgba(255, 215, 0, 0.3);
+              }
+              
+              /* Leaderboard Section */
+              .leaderboard-section {
+                  padding: 1.5rem 0.5rem;
+              }
+              
+              .leaderboard-card {
+                  padding: 1.5rem;
+                  max-width: 100%;
+                  border-radius: 12px;
+              }
+              
+              .leaderboard-card h3 {
+                  font-size: 1.5rem;
+              }
+              
+              .leaderboard-item {
+                  padding: 1rem;
+                  flex-direction: row;
+                  gap: 1rem;
+                  text-align: left;
+                  border-radius: 8px;
+              }
+              
+              .leaderboard-item .rank,
+              .leaderboard-item .player,
+              .leaderboard-item .score {
+                  font-size: 1rem;
+              }
+              
+              /* About Section */
+              .about-section {
+                  padding: 1.5rem 0.5rem;
+              }
+              
+              .about-content {
+                  grid-template-columns: 1fr;
+                  gap: 1rem;
+              }
+              
+              .about-card {
+                  padding: 1.5rem;
+                  border-radius: 12px;
+              }
+              
+              .about-card h3 {
+                  font-size: 1.4rem;
+              }
+              
+              /* Buttons and Interactive Elements */
+              .play-now-btn {
+                  padding: 1rem 2rem;
+                  font-size: 1rem;
+                  border-radius: 25px;
+              }
+              
+              .coming-soon-overlay span {
+                  font-size: 1.2rem;
+              }
+              
+              /* Mobile Animation Adjustments */
+              .cloud {
+                  opacity: 0.3;
+              }
+              
+              .cloud-1, .cloud-2, .cloud-3, .cloud-4 {
+                  width: 120px;
+                  animation-duration: 35s;
+              }
+              
+              .angel {
+                  width: 20px;
+                  opacity: 0.4;
+              }
+              
+              .angel-1, .angel-2, .angel-3, .angel-4 {
+                  animation-duration: 25s;
+              }
+              
+              /* Keep animations but optimize */
+              .casino-particle {
+                  opacity: 0.3;
+              }
+          }
+          
+          @media (max-width: 480px) {
+              .hero {
+                  padding: 0.5rem 0.25rem 1.5rem 0.25rem;
+              }
+              
+              .prize-explanation {
+                  margin-bottom: 1rem;
+                  padding: 0 0.25rem;
+              }
+              
+              .prize-explanation p {
+                  font-size: 1rem;
+              }
+              
+              .section-title {
+                  font-size: 1.8rem;
+              }
+              
+              .games-section {
+                  padding: 0 0.25rem;
               }
               
               .game-preview {
                   height: 200px;
               }
               
+              .game-info {
+                  padding: 0.8rem;
+              }
+              
               .game-info h3 {
-                  font-size: 1.2rem;
+                  font-size: 1.3rem;
               }
               
               .game-info p {
@@ -1329,121 +1475,34 @@
               
               .game-stats span {
                   font-size: 0.8rem;
-              }
-              
-              /* Leaderboard Section */
-              .leaderboard-section {
-                  padding: 2rem 1rem;
-              }
-              
-              .leaderboard-card {
-                  padding: 1.5rem;
-                  max-width: 100%;
-              }
-              
-              .leaderboard-card h3 {
-                  font-size: 1.3rem;
-              }
-              
-              .leaderboard-item {
-                  padding: 0.8rem 1rem;
-                  flex-direction: column;
-                  gap: 0.5rem;
                   text-align: center;
               }
               
-              .leaderboard-item .rank,
-              .leaderboard-item .player,
-              .leaderboard-item .score {
-                  font-size: 0.9rem;
+              .connect-wallet-btn {
+                  padding: 0.5rem 1rem;
+                  font-size: 0.8rem;
               }
               
-              /* About Section */
-              .about-section {
-                  padding: 2rem 1rem;
-              }
-              
-              .about-content {
-                  grid-template-columns: 1fr;
-                  gap: 1.5rem;
-              }
-              
-              .about-card {
-                  padding: 1.5rem;
-              }
-              
-              .about-card h3 {
-                  font-size: 1.2rem;
-              }
-              
-              /* Buttons and Interactive Elements */
               .play-now-btn {
                   padding: 0.8rem 1.5rem;
                   font-size: 0.9rem;
               }
               
-              .coming-soon-overlay span {
-                  font-size: 1rem;
+              .leaderboard-section,
+              .about-section {
+                  padding: 1rem 0.25rem;
               }
               
-              /* Mobile Animation Adjustments */
-              .cloud {
-                  opacity: 0.2;
+              .leaderboard-card,
+              .about-card {
+                  padding: 1rem;
               }
               
-              .cloud-1, .cloud-2, .cloud-3, .cloud-4 {
-                  width: 100px;
-                  animation-duration: 40s;
-              }
-              
-              .angel {
-                  width: 15px;
-                  opacity: 0.3;
-              }
-              
-              .angel-1, .angel-2, .angel-3, .angel-4 {
-                  animation-duration: 30s;
-              }
-              
-              /* Hide complex animations on mobile for performance */
-              .casino-particle {
-                  display: none;
-              }
-          }
-          
-          @media (max-width: 480px) {
-              .hero {
-                  padding: 1rem 0.5rem 3rem 0.5rem;
-              }
-              
-              .prize-explanation p {
-                  font-size: 0.9rem;
-              }
-              
-              .section-title {
-                  font-size: 1.5rem;
-              }
-              
-              .game-preview {
-                  height: 180px;
-              }
-              
-              .game-info h3 {
-                  font-size: 1.1rem;
-              }
-              
-              .game-info p {
-                  font-size: 0.8rem;
-              }
-              
-              .connect-wallet-btn {
-                  padding: 0.4rem 0.8rem;
-                  font-size: 0.7rem;
-              }
-              
-              .play-now-btn {
-                  padding: 0.6rem 1.2rem;
-                  font-size: 0.8rem;
+              .leaderboard-item {
+                  padding: 0.8rem;
+                  flex-direction: column;
+                  text-align: center;
+                  gap: 0.5rem;
               }
           }
     </style>
