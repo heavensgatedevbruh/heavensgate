@@ -1268,7 +1268,7 @@
               
               /* Hero Section */
               .hero {
-                  padding: 0.5rem 0.25rem 1rem 0.25rem;
+                  padding: 4rem 0.25rem 1rem 0.25rem;
                   min-height: auto;
               }
               
@@ -1352,6 +1352,56 @@
                   display: none;
               }
               
+              /* Contract Address Box */
+              .contract-address-box {
+                  max-width: 100%;
+                  margin: 1rem 0.5rem;
+                  padding: 1rem;
+                  border-radius: 8px;
+              }
+              
+              .contract-address-box h3 {
+                  font-size: 1rem;
+                  margin-bottom: 0.5rem;
+                  color: #333;
+              }
+              
+              .contract-input-container input {
+                  font-size: 0.8rem;
+                  padding: 0.5rem;
+                  min-width: 200px;
+              }
+              
+              .copy-btn {
+                  padding: 0.5rem;
+                  font-size: 0.8rem;
+              }
+              
+              /* Social Link */
+              .social-link {
+                  text-align: center;
+                  margin: 1rem 0.5rem;
+              }
+              
+              .x-link {
+                  display: inline-flex;
+                  align-items: center;
+                  gap: 0.5rem;
+                  padding: 0.8rem 1.5rem;
+                  background: rgba(0, 0, 0, 0.1);
+                  border: 1px solid rgba(0, 0, 0, 0.2);
+                  border-radius: 25px;
+                  color: #333;
+                  text-decoration: none;
+                  font-size: 0.9rem;
+                  transition: all 0.3s ease;
+              }
+              
+              .x-link:hover {
+                  background: rgba(0, 0, 0, 0.2);
+                  transform: translateY(-2px);
+              }
+              
               /* Buttons and Interactive Elements */
               .play-now-btn {
                   padding: 0.8rem 1.5rem;
@@ -1396,7 +1446,7 @@
               
               .hero {
                   background: white;
-                  padding: 0.25rem 0.1rem 0.8rem 0.1rem;
+                  padding: 4rem 0.1rem 0.8rem 0.1rem;
               }
               
               /* Adjust text colors for white background */
@@ -1597,6 +1647,23 @@
                                  </div>
                              </div>
                         </div>
+                    </div>
+                    
+                    <!-- Contract Address Section -->
+                    <div class="contract-address-box">
+                        <h3>Contract Address</h3>
+                        <div class="contract-input-container">
+                            <input type="text" id="contractAddress" value="APXWjCnXvRncq7UWeDPDCEFCdRyJj3oApkyzuGGoR777" readonly>
+                            <button onclick="copyContractAddress()" class="copy-btn">📋</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Social Link -->
+                    <div class="social-link">
+                        <a href="https://x.com/playheavensgate" target="_blank" class="x-link">
+                            <span class="x-icon">X</span>
+                            <span class="x-text">Follow us on X</span>
+                        </a>
                     </div>
               </div>
          </section>
