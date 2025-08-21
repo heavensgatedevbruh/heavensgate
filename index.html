@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Heaven's Gate - Flappy Bird Game</title>
     <link rel="icon" type="image/png" href="assets/heavens gate logo.png">
     <link rel="stylesheet" href="styles.css">
@@ -1252,6 +1252,7 @@
          }
          
                    @media (max-width: 768px) {
+              /* Navigation */
               .nav-container {
                   padding: 0 1rem;
               }
@@ -1261,87 +1262,188 @@
               }
               
               .connect-wallet-btn {
-                  padding: 0.6rem 1rem;
+                  padding: 0.5rem 1rem;
                   font-size: 0.8rem;
               }
               
-              .hero-content {
-                  padding: 1rem;
+              /* Hero Section */
+              .hero {
+                  padding: 2rem 1rem 4rem 1rem;
+                  min-height: 100vh;
               }
               
-              .main-content {
-                  grid-template-columns: 1fr;
-                  gap: 2rem;
+              .hero-content {
+                  padding: 0;
+                  max-width: 100%;
+              }
+              
+              /* Prize Explanation */
+              .prize-explanation {
+                  margin-bottom: 2rem;
                   padding: 0 1rem;
               }
               
-              .hero-logo img {
-                  max-width: 280px;
+              .prize-explanation p {
+                  font-size: 1rem;
+                  line-height: 1.5;
               }
               
-              .hero-play-btn-image img {
-                  max-width: 200px;
+              /* Games Section */
+              .games-section {
+                  margin-bottom: 2rem;
+                  padding: 0 1rem;
               }
               
-              .hero-leaderboard-btn-image img {
-                  max-width: 160px;
+              .section-title {
+                  font-size: 1.8rem;
+                  margin-bottom: 1.5rem;
               }
               
-              .info-card {
+              .games-grid {
+                  grid-template-columns: 1fr;
+                  gap: 1.5rem;
                   max-width: 100%;
-                  padding: 1.5rem;
               }
               
               .game-card {
                   max-width: 100%;
+                  margin: 0;
               }
               
               .game-preview {
-                  height: 250px;
+                  height: 200px;
               }
               
-              .contract-address-box {
+              .game-info h3 {
+                  font-size: 1.2rem;
+              }
+              
+              .game-info p {
+                  font-size: 0.9rem;
+              }
+              
+              .game-stats {
+                  flex-direction: column;
+                  gap: 0.5rem;
+              }
+              
+              .game-stats span {
+                  font-size: 0.8rem;
+              }
+              
+              /* Leaderboard Section */
+              .leaderboard-section {
+                  padding: 2rem 1rem;
+              }
+              
+              .leaderboard-card {
+                  padding: 1.5rem;
                   max-width: 100%;
-                  margin: 0 1rem;
               }
               
-              .contract-input-container input {
-                  min-width: 200px;
-                  font-size: 10px;
+              .leaderboard-card h3 {
+                  font-size: 1.3rem;
+              }
+              
+              .leaderboard-item {
+                  padding: 0.8rem 1rem;
+                  flex-direction: column;
+                  gap: 0.5rem;
+                  text-align: center;
+              }
+              
+              .leaderboard-item .rank,
+              .leaderboard-item .player,
+              .leaderboard-item .score {
+                  font-size: 0.9rem;
+              }
+              
+              /* About Section */
+              .about-section {
+                  padding: 2rem 1rem;
+              }
+              
+              .about-content {
+                  grid-template-columns: 1fr;
+                  gap: 1.5rem;
+              }
+              
+              .about-card {
+                  padding: 1.5rem;
+              }
+              
+              .about-card h3 {
+                  font-size: 1.2rem;
+              }
+              
+              /* Buttons and Interactive Elements */
+              .play-now-btn {
+                  padding: 0.8rem 1.5rem;
+                  font-size: 0.9rem;
+              }
+              
+              .coming-soon-overlay span {
+                  font-size: 1rem;
               }
               
               /* Mobile Animation Adjustments */
               .cloud {
-                  opacity: 0.3;
-              }
-              
-              .cloud-1 {
-                  width: 150px;
-              }
-              
-              .cloud-2 {
-                  width: 130px;
-              }
-              
-              .cloud-3 {
-                  width: 170px;
-              }
-              
-              .cloud-4 {
-                  width: 120px;
-              }
-              
-              .angel {
-                  width: 18px;
-                  opacity: 0.4;
+                  opacity: 0.2;
               }
               
               .cloud-1, .cloud-2, .cloud-3, .cloud-4 {
-                  animation-duration: 30s;
+                  width: 100px;
+                  animation-duration: 40s;
+              }
+              
+              .angel {
+                  width: 15px;
+                  opacity: 0.3;
               }
               
               .angel-1, .angel-2, .angel-3, .angel-4 {
-                  animation-duration: 25s;
+                  animation-duration: 30s;
+              }
+              
+              /* Hide complex animations on mobile for performance */
+              .casino-particle {
+                  display: none;
+              }
+          }
+          
+          @media (max-width: 480px) {
+              .hero {
+                  padding: 1rem 0.5rem 3rem 0.5rem;
+              }
+              
+              .prize-explanation p {
+                  font-size: 0.9rem;
+              }
+              
+              .section-title {
+                  font-size: 1.5rem;
+              }
+              
+              .game-preview {
+                  height: 180px;
+              }
+              
+              .game-info h3 {
+                  font-size: 1.1rem;
+              }
+              
+              .game-info p {
+                  font-size: 0.8rem;
+              }
+              
+              .connect-wallet-btn {
+                  padding: 0.4rem 0.8rem;
+                  font-size: 0.7rem;
+              }
+              
+              .play-now-btn {
+                  padding: 0.6rem 1.2rem;
+                  font-size: 0.8rem;
               }
           }
     </style>
