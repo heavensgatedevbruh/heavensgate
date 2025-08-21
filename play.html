@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Play - Heaven's Gate</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: #87CEEB;
+        }
+        
+        #gameCanvas {
+            display: block;
+            background: #87CEEB;
+        }
+        
+        .game-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+        
+        .hud {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+        
+        .hud .score {
+            margin-bottom: 10px;
+        }
+        
+        .hud .best {
+            margin-bottom: 20px;
+        }
+        
+        .hud .instructions {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+        
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            font-family: Arial, sans-serif;
+            z-index: 20;
+        }
+        
+        .overlay h1 {
+            font-size: 72px;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .overlay .score-display {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .overlay .best-display {
+            font-size: 24px;
+            margin-bottom: 40px;
+            opacity: 0.8;
+        }
+        
+        .overlay button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 24px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin: 5px;
+        }
+        
+        .overlay button:hover {
+            background: #ee5a24;
+        }
+        
+        .retry-btn-image, .start-btn-image {
+            background: none !important;
+            border: none !important;
+            padding: 0 !important;
+            margin: 5px;
+            display: inline-block;
+            transition: all 0.3s ease;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+        
+        .retry-btn-image:hover, .start-btn-image:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        .retry-btn-image img, .start-btn-image img {
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
+        }
+        
+        .retry-btn-image:hover img, .start-btn-image:hover img {
+            filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+        }
+        
+        .overlay button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        
+        
+        
+        
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <canvas id="gameCanvas"></canvas>
+        
+        <div class="hud">
+            <div class="score">Score: <span id="score">0</span></div>
+            <div class="best">Best: <span id="best">0</span></div>
+            <div class="instructions">Tap / Space to flap</div>
+            <div class="back-home">
+                <a href="index.html" style="color: white; text-decoration: none; font-size: 16px; opacity: 0.8; text-shadow: 1px 1px 2px rgba(0,0,0,0.5);">Back to Home</a>
+            </div>
+        </div>
+        
+        
+        
+        <div id="startOverlay" class="overlay">
+            <h1>START</h1>
+            <button onclick="startGame()" class="start-btn-image">
+                <img src="assets/play button.png" alt="START" style="max-width: 200px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
+            </button>
+        </div>
+        
+        <div id="gameOverOverlay" class="overlay hidden">
+            <h1>GAME OVER</h1>
+            <div class="score-display">Score: <span id="finalScore">0</span></div>
+            <div class="best-display">Best: <span id="finalBest">0</span></div>
+            
+            
+            
+            <button onclick="retryGame()" class="retry-btn-image">
+                <img src="assets/retry button.png" alt="RETRY" style="max-width: 150px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
+            </button>
+            <button onclick="window.location.href='index.html'" style="background: #4a90e2; margin-top: 10px;">Back to Home</button>
+        </div>
+    </div>
+
+    <script>
+        
+        
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Image assets
+        const images = {
+            background: new Image(),
+            angel: new Image()
+        };
+        
+        let imagesLoaded = 0;
+        const totalImages = 2;
+        
+                 // Supabase Configuration - Replace with your actual values
+         const SUPABASE_URL = 'SUPABASE_URL';
+         const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY';
+         
+         // Game state
+         let gameState = 'loading'; // 'loading', 'start', 'playing', 'gameOver'
+         let score = 0;
+         let bestScore = localStorage.getItem('heavens_gate_best') || 0;
+        
+        // Angel properties
+        let angel = {
+            x: 150,
+            y: 300,
+            velocity: 0,
+            gravity: 0.4,
+            flapPower: -7,
+            width: 50,
+            height: 50,
+            // Circle collider properties
+            get centerX() { return this.x + this.width / 2; },
+            get centerY() { return this.y + this.height / 2; },
+            get radius() { return Math.min(this.width, this.height) / 2 - 10; } // Fair collision size
+        };
+        
+        // Gate properties
+        let gates = [];
+        let gateWidth = 100;
+        let gateGap = 180;
+        let gateSpeed = 2;
+        let baseGateSpeed = 2;
+        let baseGateGap = 180;
+        
+        // Game settings
+        let lastTime = 0;
+        const targetFPS = 60;
+        const frameTime = 1000 / targetFPS;
+        
+        // Screen shake and effects
+        let screenShake = 0;
+        let gameOverFade = 0;
+        let isGameOverFading = false;
+        
+        // Initialize canvas
+        function initCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        
+        // Image loading
+        function loadImages() {
+            images.background.onload = imageLoaded;
+            images.background.src = 'assets/heaven background.png';
+            
+            images.angel.onload = imageLoaded;
+            images.angel.src = 'assets/angel.png';
+        }
+        
+        function imageLoaded() {
+            imagesLoaded++;
+            if (imagesLoaded === totalImages) {
+                gameState = 'start';
+                document.getElementById('startOverlay').classList.remove('hidden');
+            }
+        }
+        
+        // Input handling
+        function handleInput() {
+            if (gameState === 'playing') {
+                angel.velocity = angel.flapPower;
+            }
+        }
+        
+        // Event listeners
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                handleInput();
+            }
+        });
+        
+        document.addEventListener('click', handleInput);
+        document.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            handleInput();
+        });
+        
+        // Update angel
+        function updateAngel() {
+            angel.velocity += angel.gravity;
+            angel.y += angel.velocity;
+        }
+        
+        // Create new gate
+        function createGate() {
+            const gapY = Math.random() * (canvas.height - gateGap - 100) + 50;
+            gates.push({
+                x: canvas.width,
+                gapY: gapY,
+                passed: false
+            });
+        }
+        
+        // Update gates
+        function updateGates() {
+            for (let i = gates.length - 1; i >= 0; i--) {
+                const gate = gates[i];
+                gate.x -= gateSpeed;
+                
+                // Check if angel passed gate
+                if (!gate.passed && gate.x + gateWidth < angel.x) {
+                    gate.passed = true;
+                    score++;
+                    updateScore();
+                }
+                
+                // Remove gates off screen
+                if (gate.x + gateWidth < 0) {
+                    gates.splice(i, 1);
+                }
+            }
+        }
+        
+        // Check collisions
+        function checkCollisions() {
+            // Ground collision (circle vs screen boundaries)
+            if (angel.centerY + angel.radius > canvas.height || angel.centerY - angel.radius < 0) {
+                return true;
+            }
+            
+            // Gate collision - only check if angel is within gate's x-range
+            for (const gate of gates) {
+                // Only check collision if angel is within the gate's x-range
+                if (angel.centerX + angel.radius > gate.x && angel.centerX - angel.radius < gate.x + gateWidth) {
+                    // Check if angel hits the top gate area
+                    if (angel.centerY - angel.radius < gate.gapY) {
+                        return true;
+                    }
+                    
+                    // Check if angel hits the bottom gate area
+                    if (angel.centerY + angel.radius > gate.gapY + gateGap) {
+                        return true;
+                    }
+                }
+            }
+            
+            return false;
+        }
+        
+        // Update score display
+        function updateScore() {
+            document.getElementById('score').textContent = score;
+            if (score > bestScore) {
+                bestScore = score;
+                localStorage.setItem('heavens_gate_best', bestScore);
+                document.getElementById('best').textContent = bestScore;
+            }
+            
+            // Difficulty ramp every 5 points
+            if (score > 0 && score % 5 === 0) {
+                gateSpeed = baseGateSpeed + (score / 5) * 0.2;
+                gateGap = Math.max(100, baseGateGap - (score / 5) * 2);
+            }
+        }
+        
+        
+        
+        // Draw functions
+        function drawAngel() {
+            ctx.save();
+            
+            // Apply screen shake
+            if (screenShake > 0) {
+                let shakeX = (Math.random() - 0.5) * screenShake;
+                let shakeY = (Math.random() - 0.5) * screenShake;
+                ctx.translate(shakeX, shakeY);
+            }
+            
+            ctx.translate(angel.x + angel.width, angel.y);
+            ctx.scale(-1, 1);
+            ctx.drawImage(images.angel, 0, 0, angel.width, angel.height);
+            ctx.restore();
+        }
+        
+        function drawGates() {
+            ctx.save();
+            
+            // Apply screen shake
+            if (screenShake > 0) {
+                let shakeX = (Math.random() - 0.5) * screenShake;
+                let shakeY = (Math.random() - 0.5) * screenShake;
+                ctx.translate(shakeX, shakeY);
+            }
+            
+            for (const gate of gates) {
+                // Enhanced ethereal glow effect
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 25;
+                ctx.fillStyle = 'rgba(255, 215, 0, 0.2)';
+                ctx.fillRect(gate.x - 8, 0, gateWidth + 16, gate.gapY);
+                ctx.fillRect(gate.x - 8, gate.gapY + gateGap, gateWidth + 16, canvas.height - gate.gapY - gateGap);
+                ctx.shadowBlur = 0;
+                
+                // Top gate - cool curved heavenly gate
+                const topGateGradient = ctx.createLinearGradient(gate.x, 0, gate.x + gateWidth, 0);
+                topGateGradient.addColorStop(0, '#FFF8DC'); // Cornsilk
+                topGateGradient.addColorStop(0.2, '#FFD700'); // Gold
+                topGateGradient.addColorStop(0.4, '#FFA500'); // Orange
+                topGateGradient.addColorStop(0.6, '#FFD700'); // Gold
+                topGateGradient.addColorStop(0.8, '#FFA500'); // Orange
+                topGateGradient.addColorStop(1, '#FFF8DC'); // Cornsilk
+                
+                ctx.fillStyle = topGateGradient;
+                ctx.beginPath();
+                // Main body with curved bottom
+                ctx.moveTo(gate.x, 0);
+                ctx.lineTo(gate.x + gateWidth, 0);
+                ctx.lineTo(gate.x + gateWidth, gate.gapY - 20);
+                // Curved bottom edge
+                ctx.quadraticCurveTo(gate.x + gateWidth, gate.gapY, gate.x + gateWidth - 20, gate.gapY);
+                ctx.lineTo(gate.x + 20, gate.gapY);
+                ctx.quadraticCurveTo(gate.x, gate.gapY, gate.x, gate.gapY - 20);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Bottom gate - cool curved heavenly gate
+                const bottomGateGradient = ctx.createLinearGradient(gate.x, gate.gapY + gateGap, gate.x + gateWidth, gate.gapY + gateGap);
+                bottomGateGradient.addColorStop(0, '#FFF8DC'); // Cornsilk
+                bottomGateGradient.addColorStop(0.2, '#FFD700'); // Gold
+                bottomGateGradient.addColorStop(0.4, '#FFA500'); // Orange
+                bottomGateGradient.addColorStop(0.6, '#FFD700'); // Gold
+                bottomGateGradient.addColorStop(0.8, '#FFA500'); // Orange
+                bottomGateGradient.addColorStop(1, '#FFF8DC'); // Cornsilk
+                
+                ctx.fillStyle = bottomGateGradient;
+                ctx.beginPath();
+                // Main body with curved top
+                ctx.moveTo(gate.x, gate.gapY + gateGap + 20);
+                ctx.quadraticCurveTo(gate.x, gate.gapY + gateGap, gate.x + 20, gate.gapY + gateGap);
+                ctx.lineTo(gate.x + gateWidth - 20, gate.gapY + gateGap);
+                ctx.quadraticCurveTo(gate.x + gateWidth, gate.gapY + gateGap, gate.x + gateWidth, gate.gapY + gateGap + 20);
+                ctx.lineTo(gate.x + gateWidth, canvas.height);
+                ctx.lineTo(gate.x, canvas.height);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Cool curved golden borders
+                const borderGradient = ctx.createLinearGradient(gate.x, 0, gate.x + 12, 0);
+                borderGradient.addColorStop(0, '#B8860B'); // Dark goldenrod
+                borderGradient.addColorStop(0.5, '#FFD700'); // Gold
+                borderGradient.addColorStop(1, '#B8860B'); // Dark goldenrod
+                
+                ctx.fillStyle = borderGradient;
+                
+                // Left border - top gate
+                ctx.beginPath();
+                ctx.moveTo(gate.x, 0);
+                ctx.lineTo(gate.x + 12, 0);
+                ctx.lineTo(gate.x + 12, gate.gapY - 20);
+                ctx.quadraticCurveTo(gate.x + 12, gate.gapY, gate.x + 8, gate.gapY);
+                ctx.lineTo(gate.x, gate.gapY - 20);
+                ctx.quadraticCurveTo(gate.x, gate.gapY, gate.x, gate.gapY - 20);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Right border - top gate
+                ctx.beginPath();
+                ctx.moveTo(gate.x + gateWidth - 12, 0);
+                ctx.lineTo(gate.x + gateWidth, 0);
+                ctx.lineTo(gate.x + gateWidth, gate.gapY - 20);
+                ctx.quadraticCurveTo(gate.x + gateWidth, gate.gapY, gate.x + gateWidth - 8, gate.gapY);
+                ctx.lineTo(gate.x + gateWidth - 12, gate.gapY - 20);
+                ctx.quadraticCurveTo(gate.x + gateWidth - 12, gate.gapY, gate.x + gateWidth - 12, gate.gapY - 20);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Left border - bottom gate
+                ctx.beginPath();
+                ctx.moveTo(gate.x, gate.gapY + gateGap + 20);
+                ctx.quadraticCurveTo(gate.x, gate.gapY + gateGap, gate.x + 8, gate.gapY + gateGap);
+                ctx.lineTo(gate.x + 12, gate.gapY + gateGap + 20);
+                ctx.quadraticCurveTo(gate.x + 12, gate.gapY + gateGap, gate.x + 12, gate.gapY + gateGap + 20);
+                ctx.lineTo(gate.x + 12, canvas.height);
+                ctx.lineTo(gate.x, canvas.height);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Right border - bottom gate
+                ctx.beginPath();
+                ctx.moveTo(gate.x + gateWidth - 12, gate.gapY + gateGap + 20);
+                ctx.quadraticCurveTo(gate.x + gateWidth - 12, gate.gapY + gateGap, gate.x + gateWidth - 8, gate.gapY + gateGap);
+                ctx.lineTo(gate.x + gateWidth, gate.gapY + gateGap + 20);
+                ctx.quadraticCurveTo(gate.x + gateWidth, gate.gapY + gateGap, gate.x + gateWidth, gate.gapY + gateGap + 20);
+                ctx.lineTo(gate.x + gateWidth, canvas.height);
+                ctx.lineTo(gate.x + gateWidth - 12, canvas.height);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Cool curved inner highlights
+                const highlightGradient = ctx.createLinearGradient(gate.x, 0, gate.x + gateWidth, 0);
+                highlightGradient.addColorStop(0, 'rgba(255, 255, 255, 0.8)');
+                highlightGradient.addColorStop(0.3, 'rgba(255, 250, 205, 0.9)');
+                highlightGradient.addColorStop(0.7, 'rgba(255, 250, 205, 0.9)');
+                highlightGradient.addColorStop(1, 'rgba(255, 255, 255, 0.8)');
+                
+                ctx.fillStyle = highlightGradient;
+                
+                // Top gate highlight - curved
+                ctx.beginPath();
+                ctx.moveTo(gate.x + 12, 0);
+                ctx.lineTo(gate.x + gateWidth - 12, 0);
+                ctx.lineTo(gate.x + gateWidth - 12, 15);
+                ctx.lineTo(gate.x + 12, 15);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Bottom gate highlight - curved
+                ctx.beginPath();
+                ctx.moveTo(gate.x + 12, gate.gapY + gateGap);
+                ctx.lineTo(gate.x + gateWidth - 12, gate.gapY + gateGap);
+                ctx.lineTo(gate.x + gateWidth - 12, gate.gapY + gateGap + 15);
+                ctx.lineTo(gate.x + 12, gate.gapY + gateGap + 15);
+                ctx.closePath();
+                ctx.fill();
+                
+                // Elegant decorative elements - ornate patterns
+                ctx.fillStyle = '#FFD700';
+                
+                // Top gate decorative elements
+                for (let i = 0; i < 4; i++) {
+                    const circleX = gate.x + 25 + (i * 18);
+                    const circleY = gate.gapY - 20;
+                    
+                    // Outer glow for circles
+                    ctx.shadowColor = '#FFD700';
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(circleX, circleY, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Inner highlight
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = '#FFFACD';
+                    ctx.beginPath();
+                    ctx.arc(circleX, circleY, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#FFD700';
+                }
+                
+                // Bottom gate decorative elements
+                for (let i = 0; i < 4; i++) {
+                    const circleX = gate.x + 25 + (i * 18);
+                    const circleY = gate.gapY + gateGap + 20;
+                    
+                    // Outer glow for circles
+                    ctx.shadowColor = '#FFD700';
+                    ctx.shadowBlur = 8;
+                    ctx.beginPath();
+                    ctx.arc(circleX, circleY, 6, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    // Inner highlight
+                    ctx.shadowBlur = 0;
+                    ctx.fillStyle = '#FFFACD';
+                    ctx.beginPath();
+                    ctx.arc(circleX, circleY, 3, 0, Math.PI * 2);
+                    ctx.fill();
+                    
+                    ctx.fillStyle = '#FFD700';
+                }
+                
+                // Add elegant arch details at the gap
+                ctx.strokeStyle = '#FFD700';
+                ctx.lineWidth = 3;
+                ctx.shadowColor = '#FFD700';
+                ctx.shadowBlur = 10;
+                
+                // Top arch
+                ctx.beginPath();
+                ctx.arc(gate.x + gateWidth/2, gate.gapY, 20, 0, Math.PI, true);
+                ctx.stroke();
+                
+                // Bottom arch
+                ctx.beginPath();
+                ctx.arc(gate.x + gateWidth/2, gate.gapY + gateGap, 20, Math.PI, Math.PI * 2, true);
+                ctx.stroke();
+                
+                ctx.shadowBlur = 0;
+                
+                // Add subtle inner glow lines
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.6)';
+                ctx.lineWidth = 1;
+                ctx.beginPath();
+                ctx.moveTo(gate.x + 15, gate.gapY - 5);
+                ctx.lineTo(gate.x + gateWidth - 15, gate.gapY - 5);
+                ctx.stroke();
+                
+                ctx.beginPath();
+                ctx.moveTo(gate.x + 15, gate.gapY + gateGap + 5);
+                ctx.lineTo(gate.x + gateWidth - 15, gate.gapY + gateGap + 5);
+                ctx.stroke();
+            }
+            
+            ctx.restore();
+        }
+        
+        function drawBackground() {
+            ctx.save();
+            
+            // Apply screen shake
+            if (screenShake > 0) {
+                let shakeX = (Math.random() - 0.5) * screenShake;
+                let shakeY = (Math.random() - 0.5) * screenShake;
+                ctx.translate(shakeX, shakeY);
+            }
+            
+            ctx.drawImage(images.background, 0, 0, canvas.width, canvas.height);
+            ctx.restore();
+        }
+        
+        function drawEffects() {
+            // Draw game over fade overlay
+            if (isGameOverFading && gameOverFade > 0) {
+                ctx.fillStyle = `rgba(0, 0, 0, ${gameOverFade * 0.7})`;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+        
+        // Game functions
+        function startGame() {
+            gameState = 'playing';
+            document.getElementById('startOverlay').classList.add('hidden');
+            resetGame();
+        }
+        
+                 // Auto-submit score to Supabase
+         async function autoSubmitScore() {
+             try {
+                 const response = await fetch(`${SUPABASE_URL}/rest/v1/scores`, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                         'apikey': SUPABASE_ANON_KEY,
+                         'Authorization': `Bearer ${SUPABASE_ANON_KEY}`
+                     },
+                     body: JSON.stringify({
+                         name: 'Player',
+                         score: score
+                     })
+                 });
+                 
+                 if (response.ok) {
+                     console.log('Score automatically submitted to leaderboard');
+                 } else {
+                     console.error('Failed to auto-submit score');
+                 }
+             } catch (error) {
+                 console.error('Error auto-submitting score:', error);
+             }
+         }
+         
+         function gameOver() {
+             gameState = 'gameOver';
+             screenShake = 15; // Screen shake intensity
+             isGameOverFading = true;
+             gameOverFade = 0;
+             document.getElementById('finalScore').textContent = score;
+             document.getElementById('finalBest').textContent = bestScore;
+             
+             // Automatically submit score to leaderboard
+             autoSubmitScore();
+         }
+        
+        function retryGame() {
+            gameState = 'playing';
+            document.getElementById('gameOverOverlay').classList.add('hidden');
+            resetGame();
+        }
+        
+        function resetGame() {
+            score = 0;
+            angel.y = canvas.height / 2;
+            angel.velocity = 0;
+            gates = [];
+            gateSpeed = baseGateSpeed;
+            gateGap = baseGateGap;
+            screenShake = 0;
+            isGameOverFading = false;
+            gameOverFade = 0;
+            updateScore();
+        }
+        
+        // Main game loop
+        function gameLoop(currentTime) {
+            if (currentTime - lastTime >= frameTime) {
+                lastTime = currentTime;
+                
+                if (gameState === 'playing') {
+                    // Update
+                    updateAngel();
+                    updateGates();
+                    
+                    // Create new gates
+                    if (gates.length === 0 || gates[gates.length - 1].x < canvas.width - 300) {
+                        createGate();
+                    }
+                    
+                    // Check collisions
+                    if (checkCollisions()) {
+                        gameOver();
+                    }
+                }
+                
+                // Update effects
+                if (screenShake > 0) {
+                    screenShake *= 0.9; // Decay screen shake
+                }
+                
+                if (isGameOverFading) {
+                    gameOverFade = Math.min(1, gameOverFade + 0.02); // Smooth fade in
+                    if (gameOverFade >= 1) {
+                        document.getElementById('gameOverOverlay').classList.remove('hidden');
+                    }
+                }
+                
+                // Draw
+                drawBackground();
+                drawGates();
+                drawAngel();
+                drawEffects();
+            }
+            
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Initialize
+        window.addEventListener('resize', initCanvas);
+        initCanvas();
+        updateScore();
+        loadImages();
+        requestAnimationFrame(gameLoop);
+    </script>
+</body>
+</html>

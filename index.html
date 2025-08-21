@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heaven's Gate - Flappy Bird Game</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('assets/heaven background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            color: white;
+        }
+        
+                 .hero {
+             min-height: 100vh;
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             text-align: center;
+             position: relative;
+             padding: 2rem 0;
+         }
+        
+        
+        
+                                                                       .hero-content {
+               max-width: 800px;
+               padding: 1rem;
+               position: relative;
+               z-index: 2;
+               display: flex;
+               flex-direction: column;
+               align-items: center;
+               gap: 0.2rem;
+           }
+        
+                 .hero-logo {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             margin-bottom: 0.5rem;
+             transition: all 0.3s ease;
+         }
+         
+         .hero-logo:hover {
+             transform: scale(1.05) rotate(2deg);
+             filter: brightness(1.1) drop-shadow(0 8px 25px rgba(255, 255, 255, 0.3));
+         }
+         
+         .hero-logo img {
+             transition: all 0.3s ease;
+         }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-tagline {
+            font-size: 1.3rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+        
+                                                                       .hero-buttons {
+               display: flex;
+               flex-direction: column;
+               gap: 0.5rem;
+               align-items: center;
+               justify-content: center;
+           }
+        
+        .hero-play-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 3rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+        }
+        
+        .hero-play-btn-image {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .hero-play-btn-image:hover {
+            transform: translateY(-3px) scale(1.05);
+        }
+        
+        .hero-play-btn-image img {
+            drop-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+                 .hero-play-btn-image:hover img {
+             filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+         }
+         
+         .hero-leaderboard-btn-image {
+             display: inline-block;
+             transition: all 0.3s ease;
+         }
+         
+         .hero-leaderboard-btn-image:hover {
+             transform: translateY(-3px) scale(1.05);
+         }
+         
+         .hero-leaderboard-btn-image img {
+             filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.3));
+         }
+         
+                   .hero-leaderboard-btn-image:hover img {
+              filter: brightness(1.1) drop-shadow(0 6px 20px rgba(0, 0, 0, 0.4));
+          }
+          
+                     /* Contract Address Box */
+                       .contract-address-box {
+                background: rgba(255, 255, 255, 0.05);
+                backdrop-filter: blur(5px);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 10px;
+                padding: 0.5rem;
+                margin-top: 2rem;
+                text-align: center;
+                box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+            }
+          
+                     .contract-address-box h3 {
+               margin: 0 0 0.5rem 0;
+               font-size: 0.9rem;
+               color: rgba(255, 255, 255, 0.8);
+               text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+           }
+          
+                     .contract-input-container {
+               display: flex;
+               align-items: center;
+               gap: 10px;
+               justify-content: center;
+           }
+           
+           .contract-input-container input {
+               background: transparent;
+               border: none;
+               padding: 8px 12px;
+               font-size: 12px;
+               font-family: 'Courier New', monospace;
+               color: white;
+               min-width: 250px;
+               text-align: center;
+               outline: none;
+           }
+          
+                                .copy-btn {
+               background: none;
+               border: none;
+               padding: 0;
+               cursor: pointer;
+               transition: all 0.3s ease;
+               font-size: 16px;
+               color: rgba(255, 255, 255, 0.8);
+           }
+           
+           .copy-btn:hover {
+               color: white;
+               transform: scale(1.1);
+           }
+           
+                       /* Social Link */
+            .social-link {
+                margin-top: 0.5rem;
+            }
+           
+           .x-link {
+               display: inline-flex;
+               align-items: center;
+               gap: 8px;
+               background: rgba(255, 255, 255, 0.1);
+               backdrop-filter: blur(10px);
+               border: 1px solid rgba(255, 255, 255, 0.2);
+               border-radius: 25px;
+               padding: 12px 20px;
+               color: white;
+               text-decoration: none;
+               font-size: 16px;
+               font-weight: 500;
+               transition: all 0.3s ease;
+               box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+           }
+           
+           .x-link:hover {
+               background: rgba(255, 255, 255, 0.2);
+               transform: translateY(-2px);
+               box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+           }
+           
+                       .x-icon {
+                font-size: 18px;
+                font-weight: bold;
+                font-family: Arial, sans-serif;
+            }
+           
+                       .x-text {
+                text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+            }
+            
+                         /* Prize Pool Image */
+             .prize-pool-image {
+                 margin-top: 0.5rem;
+                 transition: all 0.3s ease;
+             }
+            
+            .prize-pool-image:hover {
+                transform: scale(1.02);
+                filter: brightness(1.05) drop-shadow(0 4px 15px rgba(255, 255, 255, 0.2));
+            }
+         
+         /* Animated Background Elements */
+         .animated-background {
+             position: absolute;
+             top: 0;
+             left: 0;
+             width: 100%;
+             height: 100%;
+             overflow: hidden;
+             z-index: 1;
+         }
+         
+         .clouds-container, .angels-container {
+             position: absolute;
+             width: 100%;
+             height: 100%;
+         }
+         
+                   /* Cloud Animations */
+          .cloud {
+              position: absolute;
+              opacity: 0.4;
+              filter: brightness(1.1);
+          }
+         
+                   .cloud-1 {
+              width: 200px;
+              height: auto;
+              top: 15%;
+              animation: floatCloud1 40s linear infinite;
+          }
+          
+          .cloud-2 {
+              width: 180px;
+              height: auto;
+              top: 65%;
+              animation: floatCloud2 50s linear infinite;
+          }
+          
+          .cloud-3 {
+              width: 220px;
+              height: auto;
+              top: 85%;
+              animation: floatCloud3 45s linear infinite;
+          }
+          
+          .cloud-4 {
+              width: 160px;
+              height: auto;
+              top: 45%;
+              animation: floatCloud4 55s linear infinite;
+          }
+         
+         @keyframes floatCloud1 {
+             0% { left: -150px; }
+             100% { left: 100%; }
+         }
+         
+         @keyframes floatCloud2 {
+             0% { left: -100px; }
+             100% { left: 100%; }
+         }
+         
+         @keyframes floatCloud3 {
+             0% { left: -120px; }
+             100% { left: 100%; }
+         }
+         
+         @keyframes floatCloud4 {
+             0% { left: -110px; }
+             100% { left: 100%; }
+         }
+         
+                   /* Angel Animations */
+          .angel {
+              position: absolute;
+              width: 20px;
+              height: auto;
+              opacity: 0.6;
+              filter: brightness(1.05) drop-shadow(0 2px 6px rgba(255, 255, 255, 0.2));
+          }
+         
+                   .angel-1 {
+              top: 25%;
+              animation: flyAngel1 35s ease-in-out infinite;
+          }
+          
+          .angel-2 {
+              top: 70%;
+              animation: flyAngel2 40s ease-in-out infinite;
+          }
+          
+          .angel-3 {
+              top: 85%;
+              animation: flyAngel3 38s ease-in-out infinite;
+          }
+          
+          .angel-4 {
+              top: 45%;
+              animation: flyAngel4 42s ease-in-out infinite;
+          }
+         
+                   @keyframes flyAngel1 {
+              0%, 100% { 
+                  left: -50px; 
+                  transform: translateY(0px) rotate(2deg);
+              }
+              50% { 
+                  left: 50%; 
+                  transform: translateY(-10px) rotate(-1deg);
+              }
+          }
+         
+                   @keyframes flyAngel2 {
+              0%, 100% { 
+                  left: -50px; 
+                  transform: translateY(0px) rotate(-2deg);
+              }
+              50% { 
+                  left: 50%; 
+                  transform: translateY(15px) rotate(1deg);
+              }
+          }
+         
+                   @keyframes flyAngel3 {
+              0%, 100% { 
+                  left: -50px; 
+                  transform: translateY(0px) rotate(1deg);
+              }
+              50% { 
+                  left: 50%; 
+                  transform: translateY(-20px) rotate(-1deg);
+              }
+          }
+         
+                   @keyframes flyAngel4 {
+              0%, 100% { 
+                  left: -50px; 
+                  transform: translateY(0px) rotate(-1deg);
+              }
+              50% { 
+                  left: 50%; 
+                  transform: translateY(25px) rotate(1deg);
+              }
+          }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-tagline {
+                font-size: 1.1rem;
+            }
+            
+            .hero-logo img {
+                max-width: 300px;
+            }
+            
+            .hero-play-btn {
+                padding: 0.8rem 2.5rem;
+                font-size: 1.3rem;
+            }
+            
+                         .hero-play-btn-image img {
+                 max-width: 200px;
+             }
+             
+             .hero-leaderboard-btn-image img {
+                 max-width: 160px;
+             }
+             
+             .hero-buttons {
+                 flex-direction: column;
+                 gap: 1.5rem;
+             }
+             
+                           /* Mobile Animation Adjustments */
+              .cloud {
+                  opacity: 0.3;
+              }
+              
+              .cloud-1 {
+                  width: 150px;
+              }
+              
+              .cloud-2 {
+                  width: 130px;
+              }
+              
+              .cloud-3 {
+                  width: 170px;
+              }
+              
+              .cloud-4 {
+                  width: 120px;
+              }
+              
+              .angel {
+                  width: 18px;
+                  opacity: 0.4;
+              }
+              
+              .cloud-1, .cloud-2, .cloud-3, .cloud-4 {
+                  animation-duration: 30s;
+              }
+              
+              .angel-1, .angel-2, .angel-3, .angel-4 {
+                  animation-duration: 25s;
+              }
+        
+    </style>
+</head>
+<body>
+         <main>
+         <section class="hero">
+             <!-- Animated Background Elements -->
+             <div class="animated-background">
+                 <div class="clouds-container">
+                     <img src="assets/clouds.png" alt="Clouds" class="cloud cloud-1">
+                     <img src="assets/clouds.png" alt="Clouds" class="cloud cloud-2">
+                     <img src="assets/clouds.png" alt="Clouds" class="cloud cloud-3">
+                     <img src="assets/clouds.png" alt="Clouds" class="cloud cloud-4">
+                 </div>
+                 
+                 <div class="angels-container">
+                     <img src="assets/angel.png" alt="Angel" class="angel angel-1">
+                     <img src="assets/angel.png" alt="Angel" class="angel angel-2">
+                     <img src="assets/angel.png" alt="Angel" class="angel angel-3">
+                     <img src="assets/angel.png" alt="Angel" class="angel angel-4">
+                 </div>
+             </div>
+             
+             <div class="hero-content">
+                 <div class="hero-logo">
+                     <img src="assets/heavens gate home page.png" alt="Heaven's Gate Home Page Logo" style="max-width: 400px; height: auto;">
+                 </div>
+                                                      <div class="hero-buttons">
+                       <a href="play.html" class="hero-play-btn-image">
+                           <img src="assets/play button.png" alt="PLAY" style="max-width: 250px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
+                       </a>
+                                               <a href="leaderboard.html" class="hero-leaderboard-btn-image">
+                            <img src="assets/leaderboard (2).png" alt="LEADERBOARD" style="max-width: 200px; height: auto; transition: transform 0.3s ease; cursor: pointer;">
+                        </a>
+                   </div>
+                   
+                   <div class="prize-pool-image">
+                       <img src="assets/prizepool.png" alt="Prize Pool" style="max-width: 300px; height: auto;">
+                   </div>
+                  
+                                     <div class="contract-address-box">
+                       <h3>Contract Address</h3>
+                       <div class="contract-input-container">
+                           <input type="text" id="contractAddress" value="0x1234567890abcdef..." readonly>
+                           <button onclick="copyContractAddress()" class="copy-btn">📋</button>
+                       </div>
+                   </div>
+                   
+                                     <div class="social-link">
+                                             <a href="https://x.com/playheavensgate" target="_blank" class="x-link">
+                           <span class="x-icon">X</span>
+                           <span class="x-text">Follow us on X</span>
+                       </a>
+                  </div>
+             </div>
+         </section>
+         
+         
+     </main>
+
+                   <script>
+                    function copyContractAddress() {
+               const contractInput = document.getElementById('contractAddress');
+               contractInput.select();
+               contractInput.setSelectionRange(0, 99999); // For mobile devices
+               
+               try {
+                   document.execCommand('copy');
+                                       const copyBtn = document.querySelector('.copy-btn');
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = '✅';
+                    
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                    }, 2000);
+               } catch (err) {
+                   console.error('Failed to copy: ', err);
+               }
+           }
+      </script>
+     
+     
+ </body>
+ </html>
