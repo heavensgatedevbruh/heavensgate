@@ -1,136 +1,204 @@
-# 🏛️ Flappy Heaven
+# Heaven's Gate Smart Contracts
 
-A heavenly Flappy Bird-style game with leaderboards and crypto integration coming soon!
+Smart contracts for the Heaven's Gate pay-to-play game with prize pool distribution.
 
-## 🎮 Features
+## 🎮 Game Overview
 
-- **Flappy Bird Gameplay**: Navigate an angel through golden heavenly gates
-- **Beautiful Graphics**: Heavenly background, golden gates with ethereal effects
-- **Leaderboard System**: Real-time score tracking with Supabase
-- **Responsive Design**: Works on desktop and mobile
-- **Crypto Ready**: UI prepared for Solana wallet integration
+- **Pay-to-Play**: Players pay HG tokens to start a game
+- **Prize Pool**: All entry fees go into a prize pool
+- **Daily Payouts**: Top 3 scorers get paid out daily
+- **Prize Distribution**: 50% / 30% / 20% for 1st/2nd/3rd place
 
-## 📁 File Structure
+## 📋 Prerequisites
 
-```
-heaven/
-├── index.html              # Home page with hero section
-├── play.html               # Main game with canvas
-├── leaderboard.html        # Real-time leaderboard
-├── styles.css              # Shared CSS styles
-├── test-site.html          # Site test page
-├── config.js               # Supabase configuration
-├── supabase-setup.sql      # Database setup script
-├── README-supabase.md      # Supabase setup guide
-├── assets/                 # Game images
-│   ├── heaven background.png
-│   ├── angel.png
-│   ├── gates (2).png
-│   ├── heavens gate.png
-│   └── clouds.png
-└── README.md               # This file
-```
+- Node.js (v16 or higher)
+- npm or yarn
+- MetaMask wallet
+- Some ETH for gas fees (testnet or mainnet)
 
 ## 🚀 Quick Start
 
-### 1. Test the Site Locally
+### 1. Install Dependencies
+```bash
+npm install
+```
 
-1. Open `test-site.html` in your browser to see the site overview
-2. Click the navigation links to test each page
-3. Try the game at `play.html` - it works completely offline!
+### 2. Environment Setup
+Copy the example environment file and fill in your details:
+```bash
+cp env.example .env
+```
 
-### 2. Set Up Supabase (Optional - for leaderboards)
+Edit `.env` with your configuration:
+```env
+# Network URLs (get from Infura, Alchemy, etc.)
+SEPOLIA_URL=https://sepolia.infura.io/v3/YOUR_INFURA_PROJECT_ID
+MAINNET_URL=https://mainnet.infura.io/v3/YOUR_INFURA_PROJECT_ID
 
-1. Create a Supabase project at [supabase.com](https://supabase.com)
-2. Run the SQL script in `supabase-setup.sql`
-3. Get your project URL and anon key from Settings → API
-4. Update the configuration in `play.html` and `leaderboard.html`
+# Your wallet private key (keep secret!)
+PRIVATE_KEY=your_private_key_here
 
-## 🎯 How to Play
+# Etherscan API key for contract verification
+ETHERSCAN_API_KEY=your_etherscan_api_key_here
+```
 
-1. **Start Game**: Click "Start Game" on the play page
-2. **Controls**: 
-   - Press SPACEBAR to flap
-   - Click/tap to flap
-   - Navigate through the golden gates
-3. **Scoring**: Each gate you pass gives you 1 point
-4. **Game Over**: Hit a gate or the screen boundaries
-5. **Submit Score**: Enter your name and submit to the leaderboard
+### 3. Compile Contracts
+```bash
+npm run compile
+```
+
+### 4. Deploy Contracts
+
+**Testnet (Sepolia):**
+```bash
+npm run deploy:sepolia
+```
+
+**Mainnet:**
+```bash
+npm run deploy:mainnet
+```
+
+## 📄 Contract Details
+
+### HeavensGateToken.sol
+- **Name**: Heaven's Gate
+- **Symbol**: HG
+- **Total Supply**: 1,000,000,000 HG
+- **Decimals**: 18
+- **Features**: ERC20, Burnable, Pausable, Ownable
+
+### HeavensGateGame.sol
+- **Entry Fee**: 10 HG tokens (configurable)
+- **Min Prize Pool**: 100 HG tokens before payouts
+- **Payout Interval**: Daily (configurable)
+- **Prize Distribution**: 50% / 30% / 20%
 
 ## 🔧 Configuration
 
-### Supabase Setup (for leaderboards)
-
-Replace these placeholders in both `play.html` and `leaderboard.html`:
-
+### Entry Fee
 ```javascript
-const SUPABASE_URL = 'SUPABASE_URL';        // Your Supabase project URL
-const SUPABASE_ANON_KEY = 'SUPABASE_ANON_KEY'; // Your Supabase anon key
+// Update entry fee (owner only)
+await gameContract.setEntryFee(ethers.utils.parseEther("5")); // 5 HG
 ```
 
-### Database Setup
+### Payout Interval
+```javascript
+// Update payout interval (owner only)
+await gameContract.setPayoutInterval(86400); // 1 day in seconds
+```
 
-1. Go to your Supabase project dashboard
-2. Navigate to SQL Editor
-3. Copy and paste the contents of `supabase-setup.sql`
-4. Run the script to create the scores table
+## 🎯 Game Flow
 
-## 🎨 Customization
+1. **Player connects wallet** → MetaMask integration
+2. **Player pays entry fee** → 10 HG tokens transferred to contract
+3. **Player plays game** → Score tracked locally
+4. **Player submits score** → Score recorded on-chain
+5. **Daily payout** → Top 3 players receive prizes automatically
 
-### Colors and Themes
-- **Primary**: Golden/yellow theme for heavenly gates
-- **Background**: Sky blue with heavenly background image
-- **UI**: Clean white with blue accents
+## 🔗 Frontend Integration
 
-### Game Settings
-- **Difficulty**: Automatically increases every 5 points
-- **Gates**: Golden rectangles with ethereal glow effects
-- **Angel**: Flipped horizontally to face the correct direction
+### 1. Add Web3 Script
+Include the web3 integration script in your HTML:
+```html
+<script src="https://cdn.ethers.io/lib/ethers-5.7.2.umd.min.js"></script>
+<script src="scripts/web3-integration.js"></script>
+```
 
-## 📱 Mobile Support
+### 2. Update Contract Addresses
+After deployment, update the contract addresses in `scripts/web3-integration.js`:
+```javascript
+this.GAME_CONTRACT_ADDRESS = "YOUR_DEPLOYED_GAME_CONTRACT_ADDRESS";
+this.TOKEN_CONTRACT_ADDRESS = "YOUR_DEPLOYED_TOKEN_CONTRACT_ADDRESS";
+```
 
-The site is fully responsive and works on:
-- Desktop browsers
-- Mobile phones
-- Tablets
-- Touch devices
+### 3. Connect to Game
+```javascript
+// Connect wallet
+await heavensGateWeb3.connectWallet();
 
-## 🔮 Future Features
+// Start game
+await heavensGateWeb3.startGame();
 
-- **Solana Wallet Integration**: Connect wallets for paid play
-- **Prize Pool**: Real-time token balance display
-- **Entry Fees**: Pay-to-play with rewards
-- **On-chain Rewards**: Claim prizes directly on Solana
+// Submit score
+await heavensGateWeb3.submitScore(150);
+```
 
-## 🐛 Troubleshooting
+## 🧪 Testing
 
-### Game Not Loading
-- Check that all image files are in the `assets/` folder
-- Ensure JavaScript is enabled in your browser
+### Local Testing
+```bash
+# Start local blockchain
+npm run node
 
-### Leaderboard Not Working
-- Verify Supabase configuration is correct
-- Check browser console for API errors
-- Ensure the scores table exists in your Supabase project
+# Deploy to local network
+npm run deploy:local
 
-### Images Not Showing
-- Verify file paths in the code match your actual file names
-- Check that image files are not corrupted
+# Run tests
+npm run test
+```
+
+### Testnet Testing
+1. Get testnet ETH from faucets
+2. Deploy to Sepolia testnet
+3. Test all functionality
+4. Verify contracts on Etherscan
+
+## 📊 Contract Functions
+
+### Player Functions
+- `startGame()` - Pay entry fee and start a game
+- `submitScore(uint256 score)` - Submit final score
+
+### View Functions
+- `getPlayerInfo(address player)` - Get player stats
+- `getTopScores()` - Get current top 3 scores
+- `totalPrizePool()` - Get current prize pool amount
+- `entryFee()` - Get current entry fee
+- `isPayoutDue()` - Check if payout is due
+
+### Owner Functions
+- `setEntryFee(uint256)` - Update entry fee
+- `setPayoutInterval(uint256)` - Update payout interval
+- `forcePayout()` - Force immediate payout
+- `pause()` / `unpause()` - Pause/unpause contract
+- `emergencyWithdraw()` - Emergency token withdrawal
+
+## 🔒 Security Features
+
+- **ReentrancyGuard**: Prevents reentrancy attacks
+- **Pausable**: Can pause contract in emergencies
+- **Ownable**: Owner controls for admin functions
+- **Input Validation**: All inputs validated
+- **Safe Math**: Built-in overflow protection
+
+## 🚨 Important Notes
+
+1. **Token Launch**: Deploy token contract first, then game contract
+2. **Testnet First**: Always test on testnet before mainnet
+3. **Gas Optimization**: Contracts optimized for gas efficiency
+4. **Backup**: Keep private keys and deployment info safe
+5. **Verification**: Verify contracts on Etherscan after deployment
 
 ## 📞 Support
 
-If you encounter any issues:
-1. Check the browser console for error messages
-2. Verify all files are present in the correct locations
-3. Test with the `test-site.html` page first
+For issues or questions:
+- Check the contract code comments
+- Review the deployment logs
+- Test on testnet first
+- Ensure proper token approval
 
-## 🎉 Success!
+## 🎉 Launch Checklist
 
-Once everything is set up, you'll have:
-- ✅ A fully functional Flappy Bird-style game
-- ✅ Beautiful heavenly graphics and effects
-- ✅ Real-time leaderboard with Supabase
-- ✅ Responsive design for all devices
-- ✅ Foundation for crypto integration
+- [ ] Deploy token contract
+- [ ] Deploy game contract
+- [ ] Set game contract in token contract
+- [ ] Verify contracts on Etherscan
+- [ ] Update frontend with contract addresses
+- [ ] Test all functionality
+- [ ] Launch token on your preferred platform
+- [ ] Connect game to live token
 
-Enjoy playing Flappy Heaven! 🏛️✨
+---
+
+**Good luck with your Heaven's Gate launch! 🚀**
